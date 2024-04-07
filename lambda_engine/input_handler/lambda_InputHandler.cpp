@@ -1,5 +1,5 @@
 #include "lambda_InputHandler.h"
-#include "game_logic/lambda_Game.h"
+#include "lambda_Game.h"
 #include <iostream>
 
 LE_InputHandler* LE_InputHandler::the_instance;

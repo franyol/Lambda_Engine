@@ -1,4 +1,4 @@
-#include "sdl_wrappers/lambda_TextureManager.h"
+#include "lambda_TextureManager.h"
 #include <vector>
 
 #ifndef _LAMBDA_ENGINE_GAME_H_

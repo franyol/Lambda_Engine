@@ -1,5 +1,5 @@
 #include "lambda_Game.h"
-#include "input_handler/lambda_InputHandler.h"
+#include "lambda_InputHandler.h"
 #include "lambda_FSM.h"
 #include <iostream>
 

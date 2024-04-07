@@ -1,6 +1,6 @@
 #include "lambda_TileMap.h"
-#include "rapidxml/rapidxml.hpp"
-#include "sdl_wrappers/lambda_TextureManager.h"
+#include "rapidxml.hpp"
+#include "lambda_TextureManager.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>

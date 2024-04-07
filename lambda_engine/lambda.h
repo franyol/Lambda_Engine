@@ -1,15 +1,13 @@
-#include <iostream>
-
 #ifndef _LAMBDA_ENGINE_H_
 #define _LAMBDA_ENGINE_H_
 
-    #include "game_logic/lambda_Game.h"
-    #include "game_object/lambda_GameObject.h"
-    #include "game_logic/lambda_FSM.h"
-    #include "input_handler/lambda_InputHandler.h"
-    #include "sdl_wrappers/lambda_TextureManager.h"
-    #include "sdl_wrappers/lambda_AudioManager.h"
-    #include "visual/lambda_TileMap.h"
+    #include "lambda_Game.h"
+    #include "lambda_GameObject.h"
+    #include "lambda_FSM.h"
+    #include "lambda_InputHandler.h"
+    #include "lambda_TextureManager.h"
+    #include "lambda_AudioManager.h"
+    #include "lambda_TileMap.h"
 
     bool LE_Init () {
         // Create singletons

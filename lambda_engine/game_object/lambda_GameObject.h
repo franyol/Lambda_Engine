@@ -1,6 +1,6 @@
 #include <string>
 #include <map>
-#include "sdl_wrappers/lambda_TextureManager.h"
+#include "lambda_TextureManager.h"
 
 #ifndef _LAMBDA_ENGINE_GAMEOBJ_H_
 #define _LAMBDA_ENGINE_GAMEOBJ_H_

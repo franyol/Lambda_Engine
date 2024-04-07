@@ -1,8 +1,7 @@
 #include <vector>
 #include <map>
 #include <string>
-#include "game_object/lambda_GameObject.h"
-
+#include "lambda_GameObject.h"
 #include <iostream>
 
 #ifndef _LAMBDA_ENGINE_FSM_H_
