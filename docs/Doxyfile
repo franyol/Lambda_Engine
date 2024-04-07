@@ -1,0 +1,28 @@
+# Doxyfile configuration file
+
+# Project information
+PROJECT_NAME           = "Lambda Engine"
+PROJECT_NUMBER         = "0.1"
+PROJECT_BRIEF          = "Lambda engine, gamedev framework built over SDL2"
+
+# Directories to document
+INPUT                  = .
+RECURSIVE              = YES
+
+# Output directory
+OUTPUT_DIRECTORY       = ./docs
+
+# Generate HTML output
+GENERATE_HTML          = YES
+
+# Generate LaTeX output
+GENERATE_LATEX         = NO
+
+# Extract all entities, including undocumented ones
+EXTRACT_ALL            = YES
+
+# Set to YES to include private members in the documentation
+EXTRACT_PRIVATE        = YES
+
+# Set to YES to include static members in the documentation
+EXTRACT_STATIC         = YES
