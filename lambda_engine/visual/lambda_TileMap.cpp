@@ -180,7 +180,7 @@ void LE_TileMapManager::loadFromXmlFile ( std::string filePath, Uint32 windowId 
                             }
 
                             // All set, create the tile
-                            LE_TEXTURE->addTile( windowId, textureId, tileId, x, y, h, w );
+                            LE_TEXTURE->createTile( windowId, textureId, tileId, x, y, h, w );
                         }
                     
                         childSecond = childSecond->next_sibling();
