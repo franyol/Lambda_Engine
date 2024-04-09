@@ -61,7 +61,7 @@
                    bool full_screen = false, bool input_focus = false,
                    bool hidden = false, bool borderless = false, 
                    bool resizable = false ) {
-                Uint32 windowId = LE_TEXTURE->addWindow( title, w, h, 
+                Uint32 windowId = LE_TEXTURE->createWindow( title, w, h, 
                             full_screen, input_focus,
                            hidden, borderless, resizable );
                 windows.push_back ( windowId );

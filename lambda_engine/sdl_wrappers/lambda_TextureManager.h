@@ -459,8 +459,8 @@
             void addTile ( Uint32 windowId, std::string tileId, LE_Tile* newTile ) {
                 auto it = windows.find( windowId );
                 if ( it == windows.end() ) {
-                    cerr << "Error adding tile: window id " << windowId <<
-                        " doesn't exist" << endl;
+                    std::cerr << "Error adding tile: window id " << windowId <<
+                        " doesn't exist" << std::endl;
                     return;
                 }
                 it->second->addTile ( tileId, newTile );
@@ -711,14 +711,14 @@
             void getTileSize ( Uint32 windowId, std::string tileId, int* h, int* w ) {
                 auto it = windows.find ( windowId );
                 if ( it == windows.end() ) {
-                    cerr << "Could not get tile size for " << tielId
-                        << " Window ID: " << windowId << " Doesn't exist." << endl;
+                    std::cerr << "Could not get tile size for " << tileId
+                        << " Window ID: " << windowId << " Doesn't exist." << std::endl;
                     return;
                 }
                 auto it2 = it->second->tileSet.find ( tileId );
                 if ( it2 == it->second->tileSet.end() ) {
-                    cerr << "Could not get tile size for " << tielId
-                        << " Tile ID  Doesn't exist." << endl;
+                    std::cerr << "Could not get tile size for " << tileId
+                        << " Tile ID  Doesn't exist." << std::endl;
                     return;
                 }
                 if ( h != nullptr ) *h = it2->second->h;
