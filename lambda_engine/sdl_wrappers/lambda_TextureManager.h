@@ -637,7 +637,7 @@
              *     LE_TEXTURE->createTile( mainWindow, "im3", "im3_tile" );
              *
              *     // Now when we draw, we draw into the texture instead of the window
-             *     LE_TEXTURE->draw( mainWindow, "im1+tile", 0, 0, 640, 480, false );
+             *     LE_TEXTURE->draw( mainWindow, "im1_tile", 0, 0, 640, 480, false );
              *     LE_TEXTURE->draw( mainWindow, "im2_tile", 0, 0, 320, 240, false );
              *
              *     // Restore the target to the main window
