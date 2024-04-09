@@ -130,6 +130,11 @@ void LE_TextureManager::loadTexture ( Uint32 windowId,
             tempSurface
             );
 
+    if ( newTexture == nullptr ) {
+        cerr << "Error loading image " << filePath << ": " << IMG_GetError() << endl;
+        return;
+    }
+
     leWin->addTexture ( textureId, newTexture );
 }
 
@@ -154,12 +159,17 @@ bool LE_TextureManager::draw ( Uint32 windowId, std::string tileId, int x, int y
     
     auto it = windows.find( windowId );
     if ( it == windows.end() ) {
-        cerr << "Error drawind tile: window id " << windowId <<
+        cerr << "Error drawing tile: window id " << windowId <<
             " doesn't exist" << endl;
         return false;
     }
 
     LE_Tile* tile = it->second->getTile ( tileId );
+    if ( tile == nullptr ) {
+        cerr << "Error drawing tile: tile Id: " << tileId 
+            << " doesn't exist" << endl;
+        return false;
+    }
     SDL_Texture* texture = it->second->getTexture ( tile->textureId );
 
     SDL_RendererFlip flip = SDL_FLIP_NONE;

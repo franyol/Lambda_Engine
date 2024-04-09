@@ -637,14 +637,14 @@
              *     LE_TEXTURE->createTile( mainWindow, "im3", "im3_tile" );
              *
              *     // Now when we draw, we draw into the texture instead of the window
-             *     LE_TEXTURE->draw( mainWindow, "im1", 0, 0, 640, 480, false );
-             *     LE_TEXTURE->draw( mainWindow, "im2", 0, 0, 320, 240, false );
+             *     LE_TEXTURE->draw( mainWindow, "im1+tile", 0, 0, 640, 480, false );
+             *     LE_TEXTURE->draw( mainWindow, "im2_tile", 0, 0, 320, 240, false );
              *
              *     // Restore the target to the main window
              *     LE_TEXTURE->restoreRenderTarget( mainWindow );
              *
              *     // display the blended texture into the window
-             *     LE_TEXTURE->draw( mainWindow, "im3", 0, 0 );
+             *     LE_TEXTURE->draw( mainWindow, "im3_tile", 0, 0 );
              *     LE_TEXTURE->present( mainWindow );
              *
              *     // Mantain the window during 5 seconds
