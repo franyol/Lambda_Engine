@@ -61,8 +61,8 @@ void LE_TextureManager::clean () {
 
 Uint32 LE_TextureManager::createWindow (
         const char* title,
-        int w,
         int h,
+        int w,
         bool full_screen,
         bool input_focus,
         bool hidden,
