@@ -318,8 +318,8 @@
              *
              * Save the window ID's in Uint32 type variables:
              * @code
-             * Uint32 mainWindow = LE_Texture->createWindow( "My Window", 640, 480 );
-             * Uint32 secondWindow = LE_Texture->createWindow( "Second", 640, 480 );
+             * Uint32 mainWindow = LE_Texture->createWindow( "My Window", 480, 640 );
+             * Uint32 secondWindow = LE_Texture->createWindow( "Second", 480, 640 );
              * @endcode
              * */
             std::map<Uint32, LE_Window*> windows;
@@ -367,8 +367,8 @@
              * during the window creation.
              *
              * @param title Window title
-             * @param w Window width
              * @param h Window Height
+             * @param w Window width
              * @param full_screen Set window to full screen
              * @param input_focus Set Input focus on this window
              * @param hidden Hide this window when created
@@ -376,8 +376,8 @@
              * */
             Uint32 createWindow ( 
                    const char* title, 
-                   int w, 
                    int h, 
+                   int w, 
                    bool full_screen = false, 
                    bool input_focus = false,
                    bool hidden = false,
