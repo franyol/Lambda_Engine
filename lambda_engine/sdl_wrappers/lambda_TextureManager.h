@@ -26,6 +26,26 @@
     #define QUIT_LE_TEXTURE LE_TextureManager::destroyInstance()
 
     /**
+     * @brief enumerate SDL available blend modes
+     *
+     * For blend mode details: https://wiki.libsdl.org/SDL2/SDL_BlendMode
+     * | LE_BlendMode | SDL_BlendMode equivalent |
+     * |--------------|--------------------------|
+     * | none         | SDL_BLENDMODE_NONE       |
+     * | blend        | SDL_BLENDMODE_BLEND      |
+     * | add          | SDL_BLENDMODE_ADD        |
+     * | mod          | SDL_BLENDMODE_MOD        |
+     * | mul          | SDL_BLENDMODE_MUL        |
+     * */
+    typedef enum LE_BlendMode {
+        none =  SDL_BLENDMODE_NONE,
+        blend = SDL_BLENDMODE_BLEND,
+        add =   SDL_BLENDMODE_ADD,
+        mod =   SDL_BLENDMODE_MOD,
+        mul =   SDL_BLENDMODE_MUL
+    } LE_BlendMode;
+
+    /**
      * @brief Stores tile location info
      *
      * A tile is a rectangular section of a SDL_Texture, LE_Tile objects
@@ -699,6 +719,20 @@
 
                 SDL_SetRenderTarget ( it->second->getRenderer(), NULL );
             }
+
+            /**
+             * @brief set SDL renderer blend mode
+             *
+             * @param blendMode LE_BlendMode
+             * @param windowId window to apply the blendmode, if no other option is 
+             * applied, the blend mode is applied to the renderer, use 
+             * LE_BlendMode::none to restore it.
+             * @param textureId optional; if set, the blendmode is only applied 
+             * for this texture
+             * */
+            void setBlendMode ( LE_BlendMode blendMode, 
+                    Uint32 windowId, 
+                    std::string textureId = "" );
 
             /**
              * @brief get tile's height and width

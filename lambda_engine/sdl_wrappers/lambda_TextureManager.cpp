@@ -202,3 +202,37 @@ bool LE_TextureManager::draw ( Uint32 windowId, std::string tileId, int x, int y
 
     return true;
 }
+
+void LE_TextureManager::setBlendMode ( LE_BlendMode blendMode, 
+        Uint32 windowId, 
+        std::string textureId ) {
+    auto it = windows.find ( windowId );
+    if ( it == windows.end() ) {
+        std::cerr << "Error setting blendmode: "
+            << "windowId: " << windowId << " doesn't exist" << std::endl;
+        return;
+    }
+
+    if ( textureId == "" ) {
+        if ( SDL_SetRenderDrawBlendMode ( it->second->getRenderer(),
+               (SDL_BlendMode)blendMode ) < 0 ) {
+            std::cerr << "Error setting render blend mode: " <<
+                SDL_GetError() << std::endl;
+        }
+    } else {
+        SDL_Texture* temp = it->second->getTexture ( textureId );
+        if ( temp == nullptr ) {
+            std::cerr << "Error setting texture blend mode: "
+                << "Texture id: " << textureId << " doesn't exist" 
+                << std::endl;
+            return;
+        } else {
+            if ( SDL_SetTextureBlendMode(temp, (SDL_BlendMode)blendMode) < 0 ) {
+                std::cerr << "Error setting texture blend mode: "
+                    << SDL_GetError() << std::endl;
+                return;
+            }
+        }
+    }
+}
+

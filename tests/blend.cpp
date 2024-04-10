@@ -13,12 +13,13 @@ int main ( int argc, char* argv[] ) {
     LE_TEXTURE->createTile( mainWindow, "im2", "im2_tile" );
 
     // Create a new texture and tile to blend the tiles:
-    LE_TEXTURE->createTargetTexture( mainWindow, "im3", 640, 480 );
+    LE_TEXTURE->createTargetTexture( mainWindow, "im3", 480, 640 );
     LE_TEXTURE->createTile( mainWindow, "im3", "im3_tile" );
 
     // Now when we draw, we draw into the texture instead of the window
-    LE_TEXTURE->draw( mainWindow, "im1_tile", 0, 0, 640, 480, false );
-    LE_TEXTURE->draw( mainWindow, "im2_tile", 0, 0, 320, 240, false );
+    LE_TEXTURE->setBlendMode( LE_BlendMode::add, mainWindow, "im2" );
+    LE_TEXTURE->draw( mainWindow, "im1_tile", 0, 0, 480, 640, false );
+    LE_TEXTURE->draw( mainWindow, "im2_tile", 150, 150, 240, 320, false );
 
     // Restore the target to the main window
     LE_TEXTURE->restoreRenderTarget( mainWindow );
