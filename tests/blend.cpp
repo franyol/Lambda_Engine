@@ -3,7 +3,7 @@
 int main ( int argc, char* argv[] ) {
     LE_Init();
     // Create a window to show the texture
-    Uint32 mainWindow = LE_TEXTURE->createWindow( "Blend", 640, 480 );
+    Uint32 mainWindow = LE_TEXTURE->createWindow( "Blend", 480, 640 );
 
     // Load two images into the texture manager
     LE_TEXTURE->loadTexture( mainWindow, "myimage1.png", "im1" );
@@ -17,7 +17,7 @@ int main ( int argc, char* argv[] ) {
     LE_TEXTURE->createTile( mainWindow, "im3", "im3_tile" );
 
     // Now when we draw, we draw into the texture instead of the window
-    LE_TEXTURE->draw( mainWindow, "im1+tile", 0, 0, 640, 480, false );
+    LE_TEXTURE->draw( mainWindow, "im1_tile", 0, 0, 640, 480, false );
     LE_TEXTURE->draw( mainWindow, "im2_tile", 0, 0, 320, 240, false );
 
     // Restore the target to the main window
