@@ -8,7 +8,7 @@ using namespace std;
 LE_Game* LE_Game::the_instance;
 
 void LE_Game::handleEvents () {
-    LE_InputHandler::Instance()->update();
+    LE_INPUT->update();
 }
 
 void LE_Game::update () {
@@ -63,7 +63,8 @@ void LE_Game::mainLoop () {
 
 void LE_Game::clean () {
     LE_TEXTURE->clean();
-    LE_InputHandler::Instance()->clean();
+    LE_INPUT->clean();
+    LE_FSM->clean();
 }
 
 void LE_Game::exit () {
