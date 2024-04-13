@@ -23,7 +23,8 @@ void LE_InputHandler::initJoysticks () {
             SDL_JoystickEventState(SDL_ENABLE);
             is_joysticks_initialized = true;
 
-            std::cout << "Initialized " << joysticks.size() << " Joystick(s)" << std::endl;
+            std::cout << "Initialized " << joysticks.size()
+                << " Joystick(s)" << std::endl;
         }
     } else {
         is_joysticks_initialized = false;
@@ -51,7 +52,8 @@ void LE_InputHandler::update() {
             /*
              * Note: keyState can be pressed or released, it starts in iddle by default
              * in case you want to manage actions when a button is released. In that case,
-             * set the keystate as iddle after handling the event with set_keyState() method.
+             * set the keystate as iddle after handling the event with set_keyState() 
+             * method.
              * */
             case SDL_KEYDOWN:
                 if (  event.key.repeat == 0 )
@@ -61,6 +63,45 @@ void LE_InputHandler::update() {
                 if (  event.key.repeat == 0 )
                     keys[(int)event.key.keysym.sym] = keyState::released;
                 break;
+
+            // Mouse events
+            case SDL_MOUSEWHEEL:
+                mouse.windowId = event.wheel.windowID;
+                mouse.scrollx = event.wheel.preciseX;
+                mouse.scrolly = event.wheel.preciseY;
+                mouse.xabs = event.wheel.mouseX;
+                mouse.yabs = event.wheel.mouseY;
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONUP:
+                mouse.xabs = event.button.x;
+                mouse.yabs = event.button.y;
+                switch ( event.button.button ) {
+                    case SDL_BUTTON_LEFT:
+                        if ( event.button.state == SDL_PRESSED )
+                            mouse.left = keyState::pressed;
+                        else 
+                            mouse.left = keyState::released;
+                        break;
+                    case SDL_BUTTON_MIDDLE:
+                        if ( event.button.state == SDL_PRESSED )
+                            mouse.middle = keyState::pressed;
+                        else 
+                            mouse.middle = keyState::released;
+                        break;
+                    case SDL_BUTTON_RIGHT:
+                        if ( event.button.state == SDL_PRESSED )
+                            mouse.right = keyState::pressed;
+                        else 
+                            mouse.right = keyState::released;
+                        break;
+                }
+                break;
+            case SDL_MOUSE_MOTION:
+                mouse.xrel = event.motion.xrel;
+                mouse.yrel = event.motion.yrel;
+                break;
+            // TODO: add game controllers and gather joystick info
 
         }
     }
