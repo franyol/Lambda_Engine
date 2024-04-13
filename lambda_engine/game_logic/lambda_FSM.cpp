@@ -36,6 +36,7 @@ void LE_StateMachine::push_back ( LE_GameState* newState ) {
 
 void LE_StateMachine::pop_back () {
     statePool.back()->on_exit();
+    delete statePool.back();
     statePool.pop_back();
 }
 
