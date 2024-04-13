@@ -103,9 +103,9 @@
              * */
             const MouseInput& getMouse () { return mouse; }
 
-            void setMouseIddleLeft () { mouse.left = keystate::iddle; }
-            void setMouseIddleRight () { mouse.right = keystate::iddle; }
-            void setMouseIddleMiddle () { mouse.middle = keystate::iddle; }
+            void setMouseIddleLeft () { mouse.left = keyState::iddle; }
+            void setMouseIddleRight () { mouse.right = keyState::iddle; }
+            void setMouseIddleMiddle () { mouse.middle = keyState::iddle; }
 
             /**
              * @brief initializes connected joysticks
