@@ -54,7 +54,6 @@
                 }
                 nReserved = 0;
                 nChannels = 8; // SDL default
-                masterVolume = Mix_MasterVolume (-1);
             }
 
             /**
@@ -66,13 +65,6 @@
              * @brief number of channels
              * */
             int nChannels;
-
-            /**
-             * @brief master volume
-             *
-             * controls the  volume of all channels includin music channel
-             * */
-            int masterVolume;
 
             /**
              * @brief store audio chunks by string ID
@@ -135,7 +127,7 @@
                     std::cerr << "Failed to load track " << mp3File << ": " 
                         << Mix_GetError() << std::endl;
                 } else {
-                    tracks[trackId] = new LE_Music ( music );
+                    tracks[trackId] = new LE_Music { music };
                 }
             }
 
@@ -241,10 +233,10 @@
                         nChannels = Mix_AllocateChannels ( channel + 1 );
                     }
                     if ( channel > nReserved-1 ) {
-                        nReserved = Mix_ReserceChannels ( channel + 1 );
+                        nReserved = Mix_ReserveChannels ( channel + 1 );
                     }
-                    chunks[chunkId] = new LE_Chunk ( chunk, 
-                            Mix_VolumeChunk(chunk, -1), channel );
+                    chunks[chunkId] = new LE_Chunk { chunk, 
+                            Mix_VolumeChunk(chunk, -1), channel };
                 }
             }
 
@@ -289,7 +281,7 @@
              * @param fadeIn_ms if >0, uses a fade in effect with it's duration 
              * in milli-seconds
              * */
-            int playChunk ( std::string chunkId, int loops, int fadeIn_ms = 0 ) {
+            void playChunk ( std::string chunkId, int loops, int fadeIn_ms = 0 ) {
                 auto it = chunks.find( chunkId );
                 if ( it != chunks.end() ) { 
                     if ( fadeIn_ms > 0 )
@@ -354,11 +346,13 @@
              * */
             void clean () {
                 for ( auto it = chunks.begin(); it != chunks.end(); it++ ) {
-                    Mix_FreeChunk( it->second );
+                    Mix_FreeChunk( it->second->mix_chunk );
+                    delete it->second;
                 }
                 chunks.clear();
                 for ( auto it = tracks.begin(); it != tracks.end(); it++ ) {
-                    Mix_FreeMusic( it->second );
+                    Mix_FreeMusic( it->second->mix_music );
+                    delete it->second;
                 }
                 chunks.clear();
                 Mix_CloseAudio();
