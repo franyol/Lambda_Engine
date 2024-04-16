@@ -432,6 +432,20 @@
             }
 
             /**
+             * @brief Get window renderer
+             *
+             * @param windowId
+             * @return SDL_Renderer*
+             * */
+            SDL_Renderer* getRenderer ( Uint32 windowId ) {
+                auto it = windows.find(windowId);
+                if (it != windows.end()) {
+                    return it->second->getRenderer();
+                } 
+                return nullptr;
+            }
+
+            /**
              * @brief Load an sdl texture from a png file
              *
              * @param windowId
