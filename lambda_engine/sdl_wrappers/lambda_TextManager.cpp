@@ -30,11 +30,19 @@ int LE_TextManager::createTexture
                 break;
             } 
             // Get last blank space index
-            for ( i = count; text[i] != ' '; i-- );
+            for ( i = count; text[i] != ' '; i-- ) {
+                if ( i == 0 )
+                    break;
+            }
             
             // Slice the text
-            lines.push_back( text.substr (0, i) );
-            text = text.substr (i+1);
+            if ( i == 0 ) {
+                lines.push_back( text.substr (0, count) );
+                text = text.substr (i+count);
+            } else {
+                lines.push_back( text.substr (0, i) );
+                text = text.substr (i+1);
+            }
          }
 
          int ls, lh;
