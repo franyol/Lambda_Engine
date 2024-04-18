@@ -16,6 +16,9 @@
      * */
     #define QUIT_LE_TEXT
     
+    /**
+     * @brief Stores font data
+     * */
     typedef struct LE_Font {
         TTF_Font* ttf_font;
     } LE_Font;

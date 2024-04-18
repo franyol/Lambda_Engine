@@ -48,7 +48,7 @@
     };
 
     /**
-     * @brief class to manage tile maps
+     * @brief store and use groups of tiles
      *
      * A LE_TileMap object stores tile's draw information
      * using the draws map, which asigns a vector of LE_DrawInfo objects

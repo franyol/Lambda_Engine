@@ -25,7 +25,7 @@
     } keyState;
 
     /**
-     * @bref stores mouse input information
+     * @brief stores mouse input information
      * */
     typedef struct MouseInput {
         Uint32 windowId;
