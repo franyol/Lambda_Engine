@@ -1,0 +1,22 @@
+<TILEMAPS>
+    <tilemap id="myMap">
+        <set tile="im2_tile">
+            <pos x="0" y="0" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+            <pos x="20" y="20" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+        </set>
+        <set tile="im1_tile">
+            <pos x="40" y="0" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+            <pos x="160" y="20" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+        </set>
+    </tilemap>
+    <tilemap id="myMap2">
+        <set tile="im1_tile">
+            <pos x="0" y="0" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+            <pos x="20" y="20" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+        </set>
+        <set tile="im3_tile">
+            <pos x="40" y="0" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+            <pos x="60" y="20" h="0.1" w="0.1" angle="0" scale="true" flipv="false" fliph="false"/>
+        </set>
+    </tilemap>
+</TILEMAPS>

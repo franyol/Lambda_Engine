@@ -1,10 +1,7 @@
 #include "lambda_TileMap.h"
-#include "rapidxml.hpp"
 #include "lambda_TextureManager.h"
+#include "lambda_XMLFabric.h"
 #include <iostream>
-#include <fstream>
-#include <cstring>
-#include <cstdlib>
 
 using namespace rapidxml;
 
@@ -83,234 +80,40 @@ void LE_TileMap::blendToTexture ( std::string textureId ) {
     LE_TEXTURE->restoreRenderTarget ( windowId );
 }
 
+void tilemap_onRead ( const Attr& attr, const std::string value ) {
+    LE_TILEMAP->addMap ( attr.at("id"), new LE_TileMap ( stoi(attr.at("windowId")) ) );
+}
+void pos_onRead ( const Attr& attr, const std::string value ) {
+    LE_TILEMAP->addDrawInfo ( attr.at("id"), attr.at("tile"),
+           new LE_TileDrawInfo ( 
+               stoi(attr.at("x")),
+               stoi(attr.at("y")),
+               stod(attr.at("h")),
+               stod(attr.at("w")),
+               stod(attr.at("angle")),
+               attr.at("scale") == "true",
+               attr.at("flipv") == "true",
+               attr.at("fliph") == "true"
+               ) );
+}
+
 void LE_TileMapManager::loadFromXmlFile ( std::string filePath, Uint32 windowId ) {
-    std::ifstream file ( filePath.c_str() );
-    std::string xmlString(
-            (std::istreambuf_iterator<char>(file)), 
-            std::istreambuf_iterator<char>());
 
-    xml_document<> doc;
-    doc.parse<0>(&xmlString[0]);
+    LE_XMLNode mainNode ( "TILEMAPS" ), 
+               tilemapN ( "tilemap" ),
+               setN ( "set" ),
+               posN ( "pos" );
 
-    xml_node<>* currentNode; 
-    xml_node<>* childNode;
-    xml_node<>* childSecond;
-    xml_node<>* childThird;
-    currentNode = doc.first_node();
+    Attr attr;
+    attr["windowId"] = std::to_string(windowId);
 
-    if ( std::strcmp(currentNode->name(), "TEXTURELOADER") != 0 ) {
-        std::cerr << "Invalid xml format " << filePath << std::endl;
-        std::cerr << "Expected TEXTURELOADER node, but got: " 
-            << currentNode->name() << std::endl;
-    }
+    tilemapN.setOnRead ( tilemap_onRead );
+    posN.setOnRead ( pos_onRead );
 
-    currentNode = currentNode->first_node();
+    setN.addChild ( &posN );
+    tilemapN.addChild ( &setN );
+    mainNode.addChild ( &tilemapN );
 
-    while ( currentNode ) {
+    mainNode.readDoc ( filePath, &attr );
 
-
-        // Looking for TILESETS and TILEMAPS
-        
-        if ( std::strcmp( currentNode->name(), "TILESETS" ) == 0 ) {
-            childNode = currentNode->first_node();
-            while ( childNode ) {
-                // Looking for texture
-                if ( std::strcmp( childNode->name(), "texture" ) == 0 ) {
-                
-                    std::string textureId = "";
-                    std::string filename = "";
-                    // Parse attributes
-                    for ( xml_attribute<>* attr = childNode->first_attribute(); attr; 
-                            attr = attr->next_attribute() ) {
-                        if ( std::strcmp (attr->name(), "filename") == 0 ) {
-                            filename = attr->value();
-                        }
-                        else if ( std::strcmp (attr->name(), "id") == 0 ) {
-                            textureId = attr->value();
-                        }
-                    }
-
-                    // If attributes are missing
-                    if ( textureId == "" || filename == "" ) {
-                        childNode = childNode->next_sibling();
-                        continue;
-                    }
-
-                    // All set, create the texture
-                    LE_TEXTURE->loadTexture( windowId, filename, textureId );
-
-                    childSecond = childNode->first_node();
-                    while ( childSecond ) {
-                        // Looking for tile
-
-                        if ( std::strcmp( childSecond->name(), "tile" ) == 0 ) {
-                            std::string tileId = "";
-                            int x, y;
-                            int h, w;
-                            bool xb, yb, hb, wb;
-                            xb = yb = hb = wb = false;
-                            // Parse attributes
-                            for ( xml_attribute<>* attr = childSecond->first_attribute(); attr; 
-                                    attr = attr->next_attribute() ) {
-                                if ( std::strcmp (attr->name(), "id") == 0 ) {
-                                    tileId = attr->value();
-                                }
-                                else if ( std::strcmp (attr->name(), "x") == 0 ) {
-                                    xb = true;
-                                    x = std::atoi(attr->value());
-                                }
-                                else if ( std::strcmp (attr->name(), "y") == 0 ) {
-                                    yb = true;
-                                    y = std::atoi(attr->value());
-                                }
-                                else if ( std::strcmp (attr->name(), "w") == 0 ) {
-                                    wb = true;
-                                    w = std::atoi(attr->value());
-                                }
-                                else if ( std::strcmp (attr->name(), "h") == 0 ) {
-                                    hb = true;
-                                    h = std::atoi(attr->value());
-                                }
-                            }
-
-                            // If attributes are missing
-                            if ( tileId == "" || !xb || !yb || !hb || !wb )  {
-                                childSecond = childSecond->next_sibling();
-                                continue;
-                            }
-
-                            // All set, create the tile
-                            LE_TEXTURE->createTile( windowId, textureId, tileId, x, y, h, w );
-                        }
-                    
-                        childSecond = childSecond->next_sibling();
-                        }
-                    }
-                childNode = childNode->next_sibling();
-            }
-        } 
-        
-        else if ( std::strcmp( currentNode->name(), "TILEMAPS" ) == 0 ) {
-            childNode = currentNode->first_node();
-            while ( childNode ) {
-                // Looking for tilemap
-                if ( std::strcmp( childNode->name(), "tilemap" ) == 0 ) {
-
-                    std::string mapId = "";
-                    // Parse attributes
-                    for ( xml_attribute<>* attr = childNode->first_attribute(); attr; 
-                            attr = attr->next_attribute() ) {
-                        if ( std::strcmp (attr->name(), "id") == 0 ) {
-                            mapId = attr->value();
-                        }
-                    }
-
-                    // If attributes are missing
-                    if ( mapId == "" ) {
-                        childNode = childNode->next_sibling();
-                        continue;
-                    }
-               
-                    // All set, create new map
-                    addMap ( mapId, new LE_TileMap( windowId ) );
-
-                    childSecond = childNode->first_node();
-                    while ( childSecond ) {
-                        // Looking for set
-                        if ( std::strcmp( childSecond->name(), "set" ) == 0 ) {
-                    
-                            std::string tileId = "";
-                            // Parse attributes
-                            for ( xml_attribute<>* attr = childSecond->first_attribute(); attr; 
-                                    attr = attr->next_attribute() ) {
-                                if ( std::strcmp (attr->name(), "tile") == 0 ) {
-                                    tileId = attr->value();
-                                }
-                            }
-
-                            // If attributes are missing
-                            if ( tileId == "" ) {
-                                childSecond = childSecond->next_sibling();
-                                continue;
-                            }
-
-                            childThird = childSecond->first_node();
-                            while ( childThird ) {
-                                // Looking for pos
-                                
-                                if ( std::strcmp( childThird->name(), "pos" ) == 0 ) {
-
-                                    int x, y;
-                                    double h, w, angle;
-                                    bool scale, flipv, fliph;
-                                    bool xb, yb, hb, wb, scaleb, flipvb, fliphb, angleb;
-                                    xb = yb = hb = wb = angleb = 
-                                        scaleb = flipvb = fliphb = false;
-                                    // Parse attributes
-                                    for ( xml_attribute<>* attr = childThird->first_attribute(); attr; 
-                                            attr = attr->next_attribute() ) {
-                                        if ( std::strcmp (attr->name(), "angle") == 0 ) {
-                                            angleb = true;
-                                            angle = std::atof(attr->value());
-                                        }
-                                        else if ( std::strcmp (attr->name(), "x") == 0 ) {
-                                            xb = true;
-                                            x = std::atoi(attr->value());
-                                        }
-                                        else if ( std::strcmp (attr->name(), "y") == 0 ) {
-                                            yb = true;
-                                            y = std::atoi(attr->value());
-                                        }
-                                        else if ( std::strcmp (attr->name(), "w") == 0 ) {
-                                            wb = true;
-                                            w = std::atof(attr->value());
-                                        }
-                                        else if ( std::strcmp (attr->name(), "h") == 0 ) {
-                                            hb = true;
-                                            h = std::atof(attr->value());
-                                        }
-                                        else if ( std::strcmp (attr->name(), "scale") == 0 ) {
-                                            scaleb = true;
-                                            scale = std::strcmp(attr->value(), "true") == 0;
-                                        }
-                                        else if ( std::strcmp (attr->name(), "flipv") == 0 ) {
-                                            flipvb = true;
-                                            flipv = std::strcmp(attr->value(), "true") == 0;
-                                        }
-                                        else if ( std::strcmp (attr->name(), "fliph") == 0 ) {
-                                            fliphb = true;
-                                            fliph = std::strcmp(attr->value(), "true") == 0;
-                                        }
-                                    }
-
-                                    // If attributes are missing
-                                    if ( !xb || !yb || !hb || !wb
-                                        || !angleb || !scaleb || !flipvb || !fliphb )  {
-                                        childThird = childThird->next_sibling();
-                                        continue;
-                                    }
-
-                                    // All set, add the tile to the map
-                                    addDrawInfo ( mapId, tileId, new LE_TileDrawInfo (
-                                                x, y, h, w, angle, scale, flipv, fliph
-                                                ) );
-                                }
-                            
-                                childThird = childThird->next_sibling();
-                            }   
-                        }
-                    
-                        childSecond = childSecond->next_sibling();
-                    }
-                }
-                childNode = childNode->next_sibling();
-            }
-        }
-       
-        else {
-            std::cerr << "Warning: Unknown node name: " << currentNode->name() << std::endl;
-        }
-
-        currentNode = currentNode->next_sibling();
-    }
 }

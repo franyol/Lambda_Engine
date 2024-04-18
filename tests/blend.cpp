@@ -1,4 +1,5 @@
 #include <lambda.h>
+#include <iostream>
 
 int main ( int argc, char* argv[] ) {
     LE_Init();
@@ -24,8 +25,13 @@ int main ( int argc, char* argv[] ) {
     // Restore the target to the main window
     LE_TEXTURE->restoreRenderTarget( mainWindow );
 
+
+    LE_TILEMAP->loadFromXmlFile ( "tests/test.xml", mainWindow );
+
+    LE_TILEMAP->drawMap ( "myMap" );
+
     // display the blended texture into the window
-    LE_TEXTURE->draw( mainWindow, "im3_tile", 0, 0 );
+    // LE_TEXTURE->draw( mainWindow, "im3_tile", 0, 0 );
     LE_TEXTURE->present( mainWindow );
 
     // Mantain the window during 5 seconds
