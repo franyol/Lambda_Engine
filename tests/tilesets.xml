@@ -1,0 +1,9 @@
+<TILESETS>
+    <texture id="im1" filepath="myimage1.png">
+        <set tile="im1_tile"/>
+    </texture>
+    <texture id="im2" filepath="myimage2.png">
+        <set tile="im2_tile"/>
+    </texture>
+</TILESETS>
+

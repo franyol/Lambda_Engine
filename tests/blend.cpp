@@ -6,12 +6,7 @@ int main ( int argc, char* argv[] ) {
     // Create a window to show the texture
     Uint32 mainWindow = LE_TEXTURE->createWindow( "Blend", 480, 640 );
 
-    // Load two images into the texture manager
-    LE_TEXTURE->loadTexture( mainWindow, "myimage1.png", "im1" );
-    LE_TEXTURE->loadTexture( mainWindow, "myimage2.png", "im2" );
-    // Create tiles for those textures
-    LE_TEXTURE->createTile( mainWindow, "im1", "im1_tile" );
-    LE_TEXTURE->createTile( mainWindow, "im2", "im2_tile" );
+    LE_TEXTURE->loadFromXmlFile ( "tests/test.xml", mainWindow );
 
     // Create a new texture and tile to blend the tiles:
     LE_TEXTURE->createTargetTexture( mainWindow, "im3", 480, 640 );
