@@ -98,6 +98,7 @@ void LE_InputHandler::update() {
                 }
                 break;
             case SDL_MOUSEMOTION:
+                mouse.was_moved = true;
                 mouse.xrel = event.motion.xrel;
                 mouse.yrel = event.motion.yrel;
                 break;

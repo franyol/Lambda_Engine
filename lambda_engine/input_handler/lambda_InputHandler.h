@@ -24,6 +24,9 @@
         iddle
     } keyState;
 
+    /**
+     * @bref stores mouse input information
+     * */
     typedef struct MouseInput {
         Uint32 windowId;
         keyState left;
@@ -35,6 +38,7 @@
         Sint32 yabs;
         float scrollx;
         float scrolly;
+        bool was_moved;
     } Mousestate;
 
     /**
