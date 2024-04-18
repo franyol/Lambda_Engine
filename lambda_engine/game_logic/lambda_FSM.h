@@ -65,6 +65,7 @@
              * */
             void addObject ( LE_GameObject* newObject, std::string objId ) {
                 gameObjects[objId] = newObject;
+                newObject->setup();
             }
 
             /**
