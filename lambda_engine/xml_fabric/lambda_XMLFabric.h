@@ -14,8 +14,6 @@
 
     using namespace rapidxml;
 
-    int recursion;
-
     typedef std::map<std::string, std::string> Attr;
 
     /**
@@ -71,10 +69,6 @@
              * */
             void read ( xml_node<>* node, Attr& pAttr ) {
 
-                if (++recursion > REC_LIMIT) {
-                    throw std::runtime_error("Recursion limit exceeded");
-                }
-
                 if ( std::strcmp( tagName.c_str(), node->name() ) != 0 ) {
                     return;
                 }
@@ -122,7 +116,6 @@
                 if ( pAttr != nullptr )
                     parentAtt = *pAttr;
 
-                recursion = 0;
                 for ( xml_node<>* node = doc.first_node(); node; 
                         node = node->next_sibling() )
                     read ( node, parentAtt );

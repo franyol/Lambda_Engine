@@ -56,6 +56,7 @@ endforeach()
 
 # Include rapidxml headers
 include_directories("${CMAKE_SOURCE_DIR}/rapidxml")
+install(FILES "${CMAKE_SOURCE_DIR}/rapidxml/rapidxml.hpp" DESTINATION include)
 
 # Add lambda.h to the library target
 target_sources(lambda_engine PRIVATE "${CMAKE_SOURCE_DIR}/lambda_engine/lambda.h")
