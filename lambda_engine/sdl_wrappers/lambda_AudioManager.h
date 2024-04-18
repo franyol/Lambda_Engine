@@ -18,12 +18,18 @@
      * */
     #define QUIT_LE_AUDIO LE_AudioManager::destroyInstance()
 
+    /**
+     * @brief stores audio chunks
+     * */
     typedef struct LE_Chunk {
         Mix_Chunk* mix_chunk;
         int volume;
         int channel;
     } LE_Chunk;
 
+    /**
+     * @brief stores music tracks
+     * */
     typedef struct LE_Music {
         Mix_Music* mix_music;
     } LE_Music;
