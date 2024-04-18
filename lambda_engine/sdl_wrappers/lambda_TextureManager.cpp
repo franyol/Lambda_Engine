@@ -1,4 +1,5 @@
 #include "lambda_TextureManager.h"
+#include "lambda_XMLFabric.h"
 
 using namespace std;
 
@@ -236,3 +237,38 @@ void LE_TextureManager::setBlendMode ( LE_BlendMode blendMode,
     }
 }
 
+
+void texture_onRead ( const Attr& attr, const std::string value ) {
+    LE_TEXTURE->loadTexture (
+            stoi(attr.at("windowId")),
+            attr.at("filename"),
+            attr.at("id")
+            );
+}
+
+void set_onRead ( const Attr& attr, const std::string value ) {
+    LE_TEXTURE->createTile (
+            stoi(attr.at("windowId")),
+            attr.at("id"),
+            attr.at("tile"),
+            stoi(attr.at("x")),
+            stoi(attr.at("y")),
+            stoi(attr.at("h")),
+            stoi(attr.at("w"))
+            );
+}
+
+void LE_TextureManager::loadFromXmlFile ( std::string filePath, Uint32 windowId ) {
+    
+    LE_XMLNode mainNode ( "TILESETS" ),
+               textureN ( "texture" ),
+               setN ( "set" );
+
+    Attr attr;
+    attr["windowId"] = std::to_string(windowId);
+
+    textureN.setOnRead ( texture_onRead );
+    setN.setOnRead ( set_onRead );
+
+    mainNode.readDoc ( filePath, &attr );
+}

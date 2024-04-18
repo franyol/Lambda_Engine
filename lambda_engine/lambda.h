@@ -9,6 +9,8 @@
     #include "lambda_AudioManager.h"
     #include "lambda_TileMap.h"
     #include "lambda_TextManager.h"
+    #include "lambda_XMLFabric.h"
+
 
     bool LE_Init () {
         // Create singletons
