@@ -5,26 +5,38 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG_BUILD)
 endif()
 
-
-# LINUX SDL INCLUSION
-# Find SDL2, SDL2_image, and SDL2_ttf
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
-find_package(SDL2_mixer REQUIRED)
-
-# Include directories for SDL dependencies
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} 
-    ${SDL2_MIXER_INCLUDE_DIRS})
-
-
-
 # Create library target for lambda_engine
 add_library(lambda_engine STATIC)
 
 # Set base directory
 set(basedir lambda_engine)
+
+# LINUX SDL INCLUSION
+if(UNIX AND NOT APPLE)
+    # Find SDL2, SDL2_image, SDL2_ttf, and SDL2_mixer
+    find_package(SDL2 REQUIRED)
+    find_package(SDL2_image REQUIRED)
+    find_package(SDL2_ttf REQUIRED)
+    find_package(SDL2_mixer REQUIRED)
+
+    # Include directories for SDL dependencies
+    include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_MIXER_INCLUDE_DIRS})
+
+    # Link with SDL libraries
+    target_link_libraries(lambda_engine PRIVATE ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+endif()
+
+# WINDOWS SDL INCLUSION
+if(WIN32)
+    # Add SDL include directory for Windows
+    include_directories("path/to/SDL2/include")
+
+    # Link with SDL libraries for Windows
+    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2/lib/SDL2.lib" "path/to/SDL2/lib/SDL2main.lib")
+    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2_image/lib/SDL2_image.lib")
+    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2_ttf/lib/SDL2_ttf.lib")
+    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2_mixer/lib/SDL2_mixer.lib")
+endif()
 
 # Get a list of directories within basedir
 file(GLOB dirs LIST_DIRECTORIES true "${basedir}/*")
@@ -61,11 +73,6 @@ install(FILES "${CMAKE_SOURCE_DIR}/rapidxml/rapidxml.hpp" DESTINATION include)
 # Add lambda.h to the library target
 target_sources(lambda_engine PRIVATE "${CMAKE_SOURCE_DIR}/lambda_engine/lambda.h")
 
-# Link with SDL libraries
-target_link_libraries(lambda_engine PRIVATE ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} 
-    ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
-
-
 # Install the library and header files
 install(TARGETS lambda_engine
     LIBRARY DESTINATION lib
@@ -78,3 +85,4 @@ install(FILES
     "${CMAKE_SOURCE_DIR}/lambda_engine/lambda.h"
     DESTINATION include
 )
+
