@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
+
+project(LambdaEngine)
 
 # Definitions for debug mode
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -28,14 +30,35 @@ endif()
 
 # WINDOWS SDL INCLUSION
 if(WIN32)
-    # Add SDL include directory for Windows
-    include_directories("path/to/SDL2/include")
+    
+    # Set the path to SDL2
+    set(SDL2_PATH "C:/mingw_dev_lib")
 
-    # Link with SDL libraries for Windows
-    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2/lib/SDL2.lib" "path/to/SDL2/lib/SDL2main.lib")
-    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2_image/lib/SDL2_image.lib")
-    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2_ttf/lib/SDL2_ttf.lib")
-    target_link_libraries(lambda_engine PRIVATE "path/to/SDL2_mixer/lib/SDL2_mixer.lib")
+    # Set SDL2 include directory
+    set(SDL2_INCLUDE_DIR "${SDL2_PATH}/include")
+
+    # Set SDL2 library directory
+    set(SDL2_LIBRARY_DIR "${SDL2_PATH}/lib")
+
+    # Include SDL2 headers
+    include_directories(${SDL2_INCLUDE_DIR})
+    
+    # Link SDL dependencies
+    target_link_libraries(lambda_engine PRIVATE
+        "${SDL2_LIBRARY_DIR}/libSDL2.a" # or libSDL2.dll.a if necessary
+        "${SDL2_LIBRARY_DIR}/libSDL2main.a"
+        "${SDL2_LIBRARY_DIR}/libSDL2_image.a"
+        "${SDL2_LIBRARY_DIR}/libSDL2_mixer.a"
+        "${SDL2_LIBRARY_DIR}/libSDL2_ttf.a"
+        # Link other SDL2 dependencies here
+    )
+    
+    # Copy SDL2 DLLs to the executable directory during build
+    #add_custom_command(TARGET lambda_engine POST_BUILD
+    #    COMMAND ${CMAKE_COMMAND} -E copy
+    #        "${SDL2_LIBRARY_DIR}/SDL2.dll"
+    #        $<TARGET_FILE_DIR:lambda_engine>
+    #)
 endif()
 
 # Get a list of directories within basedir
