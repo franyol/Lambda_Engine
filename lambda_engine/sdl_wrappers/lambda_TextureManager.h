@@ -782,11 +782,11 @@
              * XML file format:
              * @code
              * <TILESETS>
-             *   <texture id="myTexture" filename="path/to/texture.png">
+             *   <texture id="myTexture" filepath="path/to/texture.png">
              *       <set tile="myTile1" x="0" y="0" h="24" w="20"/>
              *       <set tile="myTile2" x="20" y="0" h="24" w="20"/>
              *   </texture>
-             *   <texture id="myTexture2" filename="path/to/texture2.png">
+             *   <texture id="myTexture2" filepath="path/to/texture2.png">
              *       <set tile="myTile3" x="0" y="0" h="24" w="20"/>
              *       <set tile="myTile4" x="20" y="0" h="24" w="20"/>
              *   </texture>
