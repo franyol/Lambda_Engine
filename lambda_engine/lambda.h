@@ -12,7 +12,7 @@
     #include "lambda_XMLFabric.h"
 
 
-    bool LE_Init () {
+    inline bool LE_Init () {
         // Create singletons
         if ( !LE_TEXTURE->EverythingWasInit() ) return false;
         LE_GAME;
@@ -25,7 +25,7 @@
         return true;
     }
 
-    void LE_Quit () {
+    inline void LE_Quit () {
         // Destroy singletons
         QUIT_LE_TEXT;
         QUIT_LE_AUDIO;

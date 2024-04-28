@@ -105,7 +105,7 @@
             /**
              * @brief get reading access to the mouse state
              * */
-            const MouseInput& getMouse () { return mouse; }
+            MouseInput* getMouse () { return &mouse; }
 
             void setMouseIddleLeft () { mouse.left = keyState::iddle; }
             void setMouseIddleRight () { mouse.right = keyState::iddle; }
