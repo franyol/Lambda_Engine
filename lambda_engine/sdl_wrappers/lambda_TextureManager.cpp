@@ -23,7 +23,7 @@ void LE_Window::clean() {
         delete it->second;
     }
     tileSet.clear();
-
+}
 
 void LE_TextureManager::init() {
 

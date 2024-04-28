@@ -410,6 +410,19 @@
                    bool resizable = false );
 
             /**
+             * @brief Cleans tiles and textures on a window
+             *
+             * @param windowId
+             * */
+            void cleanWindow ( Uint32 windowId ) {
+                auto it = windows.find(windowId);
+                if (it != windows.end()) {
+                    it->second->clean();
+                }
+            }
+
+
+            /**
              * @brief Destroy a window by it's ID
              *
              * @param windowId
