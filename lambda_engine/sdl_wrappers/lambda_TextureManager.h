@@ -180,10 +180,15 @@
              * @brief Class destructor
              *
              * calls LE_Window::clean()
+             * also destroys window and renderer
              *
              * @see LE_Window::clean
              * */
-            ~LE_Window () { clean(); }
+            ~LE_Window () { 
+                clean(); 
+                SDL_DestroyRenderer( sdl_renderer );
+                SDL_DestroyWindow( sdl_window );
+            }
 
             /**
              * @brief sdl_window getter function

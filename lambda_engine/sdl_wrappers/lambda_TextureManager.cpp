@@ -23,9 +23,7 @@ void LE_Window::clean() {
         delete it->second;
     }
     tileSet.clear();
-    SDL_DestroyRenderer( sdl_renderer );
-    SDL_DestroyWindow( sdl_window );
-}
+
 
 void LE_TextureManager::init() {
 
