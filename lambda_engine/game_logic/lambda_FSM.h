@@ -135,6 +135,8 @@
              * @brief class constructor
              * */
             LE_StateMachine () {};
+
+            std::vector<LE_GameState*> changeQueue;
         public:
 
             /**

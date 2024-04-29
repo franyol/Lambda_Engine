@@ -30,17 +30,30 @@ void LE_GameState::render () {
 }
 
 void LE_StateMachine::push_back ( LE_GameState* newState ) {
-    statePool.push_back ( newState );
-    newState->on_enter();
+    changeQueue.push_back( newState );
 }
 
 void LE_StateMachine::pop_back () {
-    statePool.back()->on_exit();
-    delete statePool.back();
-    statePool.pop_back();
+    changeQueue.push_back( nullptr );
 }
 
 void LE_StateMachine::update () {
+
+    // Check for state changes before updating
+    if (changeQueue.size() > 0) {
+        for (int i = 0; i < changeQueue.size(); i++) {
+            if ( changeQueue[i] == nullptr ) {
+                statePool.back()->on_exit();
+                delete statePool.back();
+                statePool.pop_back();
+            } else {
+                statePool.push_back ( changeQueue[i] );
+                changeQueue[i]->on_enter();
+            }
+        }
+        changeQueue.clear();
+    }
+
     // Only updates the current state
     if (statePool.size() < 1) {
         std::cerr << "No states to update" << std::endl;
