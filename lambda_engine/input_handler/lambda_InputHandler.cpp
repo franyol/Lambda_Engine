@@ -4,7 +4,11 @@
 
 LE_InputHandler* LE_InputHandler::the_instance;
 
-LE_InputHandler::LE_InputHandler () {}
+LE_InputHandler::LE_InputHandler () {
+    mouse.left = keyState::iddle;
+    mouse.middle = keyState::iddle;
+    mouse.right = keyState::iddle;
+}
 
 void LE_InputHandler::initJoysticks () {
     if ( SDL_WasInit(SDL_INIT_JOYSTICK) == 0 ) {
