@@ -720,7 +720,11 @@
                         w, h );
                 addTexture ( windowId, textureId, targetTexture );
 
+                SDL_SetTextureBlendMode(targetTexture, SDL_BLENDMODE_BLEND);
+
                 SDL_SetRenderTarget ( it->second->getRenderer(), targetTexture );
+                SDL_SetRenderDrawColor(it->second->getRenderer(), 0, 0, 0, 0);
+                SDL_RenderClear(it->second->getRenderer());
             }
 
             /**

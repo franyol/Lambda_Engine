@@ -77,6 +77,7 @@ int LE_TextManager::createTexture
                         tempSurface );
                 if ( texture != nullptr ) {
                     // Paste texture into target
+                    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
                     SDL_QueryTexture ( texture, NULL, NULL, &dst.w, &dst.h );
                     SDL_RenderCopy (
                             tm->getRenderer(windowId), texture,
