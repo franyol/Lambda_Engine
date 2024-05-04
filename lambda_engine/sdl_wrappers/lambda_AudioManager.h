@@ -23,7 +23,6 @@
      * */
     typedef struct LE_Chunk {
         Mix_Chunk* mix_chunk;
-        int volume;
         int channel;
     } LE_Chunk;
 
@@ -241,8 +240,7 @@
                     if ( channel > nReserved-1 ) {
                         nReserved = Mix_ReserveChannels ( channel + 1 );
                     }
-                    chunks[chunkId] = new LE_Chunk { chunk, 
-                            Mix_VolumeChunk(chunk, -1), channel };
+                    chunks[chunkId] = new LE_Chunk { chunk, channel };
                 }
             }
 
@@ -258,8 +256,6 @@
             int chunkVolume ( std::string chunkId, int volume ) { 
                 auto it = chunks.find( chunkId );
                 if ( it != chunks.end() ) { 
-                    if ( volume > -1 && volume <= 128 ) 
-                        it->second->volume = volume;
                     return Mix_VolumeChunk ( it->second->mix_chunk, volume );
                 }
                 return -1;
