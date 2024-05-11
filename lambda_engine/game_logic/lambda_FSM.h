@@ -137,6 +137,8 @@
             LE_StateMachine () {};
 
             std::vector<LE_GameState*> changeQueue;
+
+            std::map<std::string, LE_GameState* (*)()> stateGenerators;
         public:
 
             /**
@@ -171,9 +173,60 @@
             }
 
             /**
+             * @brief adds a generator function
+             *
+             * @param stateId id to call the generator later
+             * @param func the generator function
+             *
+             * example:
+             * @code
+             *
+             * LE_GameState* myStateGenerator () {
+             *     return new MyState();
+             * }
+             *
+             * LE_FSM->addGenerator (  "myState", myStateGenerator );
+             * LE_FSM->push_back ( "myState" );
+             * // Same as LE_FSM->push_back( new MyState() );
+             * @endcode
+             * */
+            void addGenerator ( std::string stateId, LE_GameState* (*func)() ) {
+                auto it = stateGenerators.find ( stateId );
+                if ( it != stateGenerators.end() ) {
+                    std::cout << stateId << " Is already mapped to a generator";
+                    return;
+                }
+                
+                stateGenerators[ stateId ] = func;
+            }
+
+            /**
+             * @brief deletes a generator from ID
+             *
+             * @param stateId
+             * */
+            void popGenerator ( std::string stateId ) {
+                stateGenerators.erase ( stateId );
+            }
+
+            /**
              * @brief adds a new LE_GameState to the state machine
              * */
             void push_back ( LE_GameState* newState );
+
+            /**
+             * @brief adds a new LE_GameState to the state machine from a generator
+             * */
+            void push_back ( std::string stateId ) {
+                auto it = stateGenerators.find ( stateId );
+                if ( it == stateGenerators.end() ) {
+                    std::cout << "Error pushing state " << stateId <<
+                        ": generator not found";
+                    return;
+                }
+                // Call generator
+                push_back (it->second());
+            }
 
             /**
              * @brief deletes statePool back and deallocates that game state
