@@ -110,10 +110,6 @@
             /** 
              * @brief Get class members
              *
-             * It's not expected to get or modify any of LE_Tile members
-             * since tilemaps are static assets, use this function in case
-             * you need to query the tile data.
-             *
              * @param m_textureId ptr where to save Texture id
              * @param m_x ptr where to save x cords
              * @param m_y ptr where to save y cords
@@ -123,6 +119,11 @@
             void query ( std::string* m_textureId = nullptr,
                          int* m_x = nullptr, int* m_y = nullptr, 
                          int* m_h = nullptr, int* m_w = nullptr );
+
+            void set_x ( int m_x ) { x = m_x; }
+            void set_y ( int m_y ) { y = m_y; }
+            void set_h ( int m_h ) { h = m_h; }
+            void set_w ( int m_w ) { w = m_w; }
     };
 
     /**
