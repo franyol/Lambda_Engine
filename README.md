@@ -7,14 +7,14 @@ Go to project root and run:
 
 Change "C:/lambda_engine_dev_lib" with the installation directory you want it to be
 
-´´´
+```
 cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:/lambda_engine_dev_lib"
-´´´
+```
 
 Then go to the build directory to build and install it:
 
 In my case I will use mingw32-make to install it
 
-´´´
+```
 mingw32-make install
-´´´
+```
