@@ -171,6 +171,19 @@
             }
 
             /**
+             * @brief get current state objects
+             *
+             * Useful for calling state methods like LE_GameState::popObject
+             * inside game object update methods.
+             *
+             * return LE_GameState* ptr to the current state
+             * */
+            LE_GameState* getCurrentState () {
+                if (statePool.size() < 1) return nullptr;
+                return statePool.back();
+            }
+
+            /**
              * @brief destroys the class singleton
              *
              * deallocates all states
