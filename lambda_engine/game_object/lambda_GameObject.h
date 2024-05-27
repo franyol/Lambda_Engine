@@ -60,6 +60,13 @@
              * */
             LE_GameObject () {}
             virtual ~LE_GameObject () {}
+
+            /**
+             *  @brief destroys object in next frame
+             * */
+            virtual void pop () {
+                destroy_me = true;
+            }
             
             /**
              * @brief add your class initialization here

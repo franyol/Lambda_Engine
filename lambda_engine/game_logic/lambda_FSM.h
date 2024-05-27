@@ -32,6 +32,17 @@
              * */
             std::map<std::string, LE_GameObject*> gameObjects;
 
+            typedef struct NewGameObject {
+                LE_GameObject* newObject;
+                std::string objID;
+
+                NewGameObject ( LE_GameObject* _newObject, std::string _objID ): 
+                    newObject(_newObject), objID(_objID) {}
+            } NewGameObject;
+
+            std::vector<NewGameObject> objectQueue;
+            std::vector<std::string> objectDeleteQueue;
+
         public:
 
             /**
@@ -64,8 +75,7 @@
              * @param objId Game Object ID
              * */
             void addObject ( LE_GameObject* newObject, std::string objId ) {
-                gameObjects[objId] = newObject;
-                newObject->setup();
+                objectQueue.push_back( { newObject, objId } );
             }
 
             /**
@@ -74,11 +84,7 @@
              * @param onjId Game Object ID
              * */
             void popObject ( std::string objId ) {
-                auto it = gameObjects.find(objId);
-                if (it != gameObjects.end()) {
-                    delete it->second;
-                    gameObjects.erase(it);
-                }
+                objectDeleteQueue.push_back( objId );
             }
 
             /**
@@ -112,6 +118,10 @@
                 for ( auto it = gameObjects.begin(); it != gameObjects.end(); it++ )
                     delete it->second;
                 gameObjects.clear(); 
+                for ( int i=0; i < objectQueue.size(); i++ ) {
+                    delete objectQueue[i].newObject;
+                }
+                objectQueue.clear(); 
             }
     };
 

@@ -3,7 +3,24 @@
 
 LE_StateMachine* LE_StateMachine::the_instance;
 
-void LE_GameState::update () {
+inline void LE_GameState::update () {
+    if (objectQueue.size() > 0) {
+        for (int i = 0; i < objectQueue.size(); i++) {
+            gameObjects[objectQueue[i].objID] = objectQueue[i].newObject;
+            objectQueue[i].newObject->setup();
+        }
+        objectQueue.clear();
+    }
+    if (objectDeleteQueue.size() > 0) {
+        for (int i = 0; i < objectDeleteQueue.size(); i++) {
+            auto it = gameObjects.find ( objectDeleteQueue[i] );
+            if ( it != gameObjects.end() ) {
+                delete it->second;
+                gameObjects.erase(it);
+            }
+        }
+        objectDeleteQueue.clear();
+    }
     if ( gameObjects.size() < 1 ) {
         std::cerr << "State with no game objects to update" << std::endl;
         return;
@@ -39,7 +56,7 @@ void LE_StateMachine::pop_back () {
 
 void LE_StateMachine::update () {
 
-    // Check for state changes before updating
+    // Check for state changes
     if (changeQueue.size() > 0) {
         for (int i = 0; i < changeQueue.size(); i++) {
             if ( changeQueue[i] == nullptr ) {
@@ -60,6 +77,7 @@ void LE_StateMachine::update () {
         return;
     }
     statePool.back()->update();
+
 }
 
 void LE_StateMachine::render () {
@@ -78,4 +96,6 @@ void LE_StateMachine::clean () {
         delete state;
     }
     statePool.clear();
+    changeQueue.clear();
+    stateGenerators.clear();
 }

@@ -11,7 +11,7 @@ void LE_Game::handleEvents () {
     LE_INPUT->update();
 }
 
-void LE_Game::update () {
+inline void LE_Game::update () {
     LE_StateMachine::Instance()->update();
 }
 
@@ -68,7 +68,5 @@ void LE_Game::clean () {
 }
 
 void LE_Game::exit () {
-    cout << "Cleaning up" << endl;
     running = false;
-    clean();
 }
