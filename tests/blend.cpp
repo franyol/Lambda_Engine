@@ -6,7 +6,7 @@ int main ( int argc, char* argv[] ) {
     // Create a window to show the texture
     Uint32 mainWindow = LE_TEXTURE->createWindow( "Blend", 480, 640 );
 
-    LE_TEXTURE->loadFromXmlFile ( "tests/test.xml", mainWindow );
+    LE_TEXTURE->loadFromXmlFile ( "test.xml", mainWindow );
 
     // Create a new texture and tile to blend the tiles:
     LE_TEXTURE->createTargetTexture( mainWindow, "im3", 480, 640 );
@@ -21,7 +21,7 @@ int main ( int argc, char* argv[] ) {
     LE_TEXTURE->restoreRenderTarget( mainWindow );
 
 
-    LE_TILEMAP->loadFromXmlFile ( "tests/test.xml", mainWindow );
+    LE_TILEMAP->loadFromXmlFile ( "test.xml", mainWindow );
 
     LE_TILEMAP->drawMap ( "myMap" );
 
