@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/home/franyol/Desktop/gitrep/Lambda_Engine",
+  "command": "/usr/bin/c++  -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_object -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/xml_fabric -I/home/franyol/Desktop/gitrep/Lambda_Engine/rapidxml  -o CMakeFiles/lambda_engine.dir/lambda_engine/game_logic/lambda_FSM.cpp.o -c /home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic/lambda_FSM.cpp",
+  "file": "/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic/lambda_FSM.cpp"
+},
+{
+  "directory": "/home/franyol/Desktop/gitrep/Lambda_Engine",
+  "command": "/usr/bin/c++  -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_object -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/xml_fabric -I/home/franyol/Desktop/gitrep/Lambda_Engine/rapidxml  -o CMakeFiles/lambda_engine.dir/lambda_engine/game_logic/lambda_Game.cpp.o -c /home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic/lambda_Game.cpp",
+  "file": "/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic/lambda_Game.cpp"
+},
+{
+  "directory": "/home/franyol/Desktop/gitrep/Lambda_Engine",
+  "command": "/usr/bin/c++  -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_object -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/xml_fabric -I/home/franyol/Desktop/gitrep/Lambda_Engine/rapidxml  -o CMakeFiles/lambda_engine.dir/lambda_engine/input_handler/lambda_InputHandler.cpp.o -c /home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler/lambda_InputHandler.cpp",
+  "file": "/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler/lambda_InputHandler.cpp"
+},
+{
+  "directory": "/home/franyol/Desktop/gitrep/Lambda_Engine",
+  "command": "/usr/bin/c++  -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_object -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/xml_fabric -I/home/franyol/Desktop/gitrep/Lambda_Engine/rapidxml  -o CMakeFiles/lambda_engine.dir/lambda_engine/sdl_wrappers/lambda_AudioManager.cpp.o -c /home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers/lambda_AudioManager.cpp",
+  "file": "/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers/lambda_AudioManager.cpp"
+},
+{
+  "directory": "/home/franyol/Desktop/gitrep/Lambda_Engine",
+  "command": "/usr/bin/c++  -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_object -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/xml_fabric -I/home/franyol/Desktop/gitrep/Lambda_Engine/rapidxml  -o CMakeFiles/lambda_engine.dir/lambda_engine/sdl_wrappers/lambda_TextManager.cpp.o -c /home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers/lambda_TextManager.cpp",
+  "file": "/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers/lambda_TextManager.cpp"
+},
+{
+  "directory": "/home/franyol/Desktop/gitrep/Lambda_Engine",
+  "command": "/usr/bin/c++  -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_object -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/xml_fabric -I/home/franyol/Desktop/gitrep/Lambda_Engine/rapidxml  -o CMakeFiles/lambda_engine.dir/lambda_engine/sdl_wrappers/lambda_TextureManager.cpp.o -c /home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers/lambda_TextureManager.cpp",
+  "file": "/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers/lambda_TextureManager.cpp"
+},
+{
+  "directory": "/home/franyol/Desktop/gitrep/Lambda_Engine",
+  "command": "/usr/bin/c++  -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_logic -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/game_object -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/input_handler -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/sdl_wrappers -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual -I/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/xml_fabric -I/home/franyol/Desktop/gitrep/Lambda_Engine/rapidxml  -o CMakeFiles/lambda_engine.dir/lambda_engine/visual/lambda_TileMap.cpp.o -c /home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual/lambda_TileMap.cpp",
+  "file": "/home/franyol/Desktop/gitrep/Lambda_Engine/lambda_engine/visual/lambda_TileMap.cpp"
+}
+]
