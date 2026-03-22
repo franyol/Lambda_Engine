@@ -36,7 +36,7 @@
             bool framerateFixed;
 
             /**
-             * @brief states the maximum rate the game can update when 
+             * @brief states the maximum rate the game can update when
              * LE_Game::framerateFixed is set
              * */
             int framerate;
@@ -54,11 +54,7 @@
             /**
              * @brief class constructor
              * */
-            LE_Game () {
-                running = false;
-                framerateFixed = false;
-                framerate = 30;
-            }
+            LE_Game ();
 
         public:
             /**
@@ -66,49 +62,36 @@
              *
              * Calls LE_Game::clean
              * */
-            ~LE_Game () { clean(); }
+            ~LE_Game ();
 
             /**
              * @brief Get LE_Game::the_instance
              *
              * @return LE_Game* pointer to the instance
              * */
-            static LE_Game* Instance() {
-                if ( the_instance == nullptr ) {
-                    the_instance = new LE_Game();
-                } 
-                return the_instance;
-            }
+            static LE_Game* Instance();
 
             /**
              * @brief Deallocates memory from LE_Game::the_instance
              * */
-            static void destroyInstance() {
-                if (the_instance != nullptr) {
-                    delete the_instance;
-                    the_instance = nullptr;
-                }
-            }
+            static void destroyInstance();
 
             /**
              * @brief get LE_Game::deltaTime
              * */
-            double getDeltaTime () { return deltaTime; }
+            double getDeltaTime ();
 
             /**
              * @brief Set the framerate to a static value
              *
              * @param fps framerate in Hz
              * */
-            void fixFramerate ( int fps ) {
-                framerate = fps;
-                framerateFixed = true;
-            }
+            void fixFramerate ( int fps );
 
             /**
              * @brief Unfix framerate (game will update as fast as it can get)
              * */
-            void unfixFramerate () { framerateFixed = false; }
+            void unfixFramerate ();
 
             /**
              * @brief Creates a new window
@@ -123,14 +106,8 @@
              * */
             Uint32 createWindow ( const char* title, int w, int h,
                    bool full_screen = false, bool input_focus = false,
-                   bool hidden = false, bool borderless = false, 
-                   bool resizable = false ) {
-                Uint32 windowId = LE_TEXTURE->createWindow( title, w, h, 
-                            full_screen, input_focus,
-                           hidden, borderless, resizable );
-                windows.push_back ( windowId );
-                return windowId;
-            }
+                   bool hidden = false, bool borderless = false,
+                   bool resizable = false );
 
             /**
              * @brief get window Id
@@ -138,21 +115,19 @@
              * @param idx index of the windows of LE_Game stored by it's creation order
              * @return window id
              * */
-            Uint32 getWindow ( int idx ) {
-                return windows.at(idx);
-            }
+            Uint32 getWindow ( int idx );
 
             /**
              * @brief returns if the game loop is still running
              * */
-            bool isRunning ( void ) { return running; }
+            bool isRunning ( void );
 
             /**
              * @brief Change the game run state
              *
              * @param state true to continue game loop, false to stop it
              * */
-            void setRunning ( bool state ) { running = state; }
+            void setRunning ( bool state );
 
             /**
              * @brief Calls LE_InputHandler::update()
@@ -185,5 +160,6 @@
              * */
             void mainLoop ();
     };
+
 
 #endif

@@ -7,6 +7,57 @@ using namespace std;
 
 LE_Game* LE_Game::the_instance;
 
+LE_Game::LE_Game () {
+                running = false;
+                framerateFixed = false;
+                framerate = 30;
+            }
+
+LE_Game::~LE_Game () { clean(); }
+
+
+LE_Game* LE_Game::Instance() {
+    if ( the_instance == nullptr ) {
+        the_instance = new LE_Game();
+    }
+    return the_instance;
+}
+
+void LE_Game::destroyInstance() {
+    if (the_instance != nullptr) {
+        delete the_instance;
+        the_instance = nullptr;
+    }
+}
+
+double LE_Game::getDeltaTime () { return deltaTime; }
+
+void LE_Game::fixFramerate ( int fps ) {
+    framerate = fps;
+    framerateFixed = true;
+}
+
+void LE_Game::unfixFramerate () { framerateFixed = false; }
+
+Uint32 LE_Game::createWindow ( const char* title, int w, int h,
+        bool full_screen, bool input_focus,
+        bool hidden, bool borderless,
+        bool resizable ) {
+    Uint32 windowId = LE_TEXTURE->createWindow( title, w, h,
+            full_screen, input_focus,
+            hidden, borderless, resizable );
+    windows.push_back ( windowId );
+    return windowId;
+}
+
+Uint32 LE_Game::getWindow ( int idx ) {
+    return windows.at(idx);
+}
+
+bool LE_Game::isRunning ( void ) { return running; }
+
+void LE_Game::setRunning ( bool state ) { running = state; }
+
 void LE_Game::handleEvents () {
     LE_INPUT->update();
 }
