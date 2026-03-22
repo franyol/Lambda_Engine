@@ -1,18 +1,30 @@
 # LE_Game
 
-This is class is the heart of Lambda Engine, it carries the entrypoint of any game.
+## Table of Contents
+- [Initialize LE_GAME](#initialize-le_game)
+- [Managing windows](#managing-windows)
+- [Fixing a Framerate](#fixing-a-framerate)
+- [The main loop](#the-main-loop)
+  - [1. Handle events](#1-handle-events)
+  - [2. Update](#2-update)
+  - [3. Render](#3-render)
+- [Usage example](#usage-example)
 
-As many other classes, LE_Game follows the Singleton design pattern. You can acces the LE_Game instance by accessing to `LE_GAME`, which is a shortcut for `LE_Game::Instance()`.
+---
 
-## Initialize LE_GAME:
+This class is the heart of Lambda Engine; it contains the entry point of any game.
 
-The necessary initialization for LE_GAME will be done after calling:
+Like many other classes, `LE_Game` follows the Singleton design pattern. You can access its instance through `LE_GAME`, which is a shortcut for `LE_Game::Instance()`.
+
+## Initialize LE_GAME
+
+The required initialization for `LE_GAME` is performed by calling:
 
 ```cpp
 LE_init();
 ```
 
-Remember to deinitializate everything before closing the application:
+Remember to deinitialize everything before closing the application:
 
 ```cpp
 LE_Quit();
@@ -20,43 +32,49 @@ LE_Quit();
 
 ## Managing windows
 
-Lambda Engine lets you work over several windows, you can create a window by using the `createWindow` method, this function will return the window ID you can use to later manage in which window you will render your game objects.
-
+Lambda Engine allows you to work with multiple windows. You can create a window using the `createWindow` method. This function returns a window ID that you can later use to manage where your game objects are rendered.
 
 ## Fixing a Framerate
 
-Framerate affects on how fast will the game main loop run, by default, it will be unfixed, making the game update as fast as the machine lets it, to fix a target framerate, use the `fixFramerate` method.
-
+Framerate affects how fast the game main loop runs. By default, it is unfixed, meaning the game updates as fast as the machine allows. To set a target framerate, use the `fixFramerate` method.
 
 ## The main loop
 
-`LE_GAME->mainLoop()` is the entrypoint that will put all the logic behind the game to run, besides this, this method also calculates the deltaTime elapsed between gameLoop laps which is necessary to program the game logic. The deltatime is available along any project by using: `LE_GAME->getDeltaTime();`, which returns the elapsed time since the last update in milliseconds.
+`LE_GAME->mainLoop()` is the entry point that runs all the game logic. It also calculates the delta time between loop iterations, which is necessary for consistent game logic.
 
-To stop the game loop and ensure everything is cleaned propperly, use the method:
+The delta time is available anywhere in the project via:
+
 ```cpp
-LE_GAME->setRunning = false;
+LE_GAME->getDeltaTime();
 ```
-At any point, the game will be finalized after the next lap.
 
-Each lap inside the mainLoop does the following actions in this exact order:
+This returns the elapsed time since the last update in milliseconds.
+
+To stop the game loop and ensure everything is cleaned properly, use:
+
+```cpp
+LE_GAME->setRunning(false);
+```
+
+The game will stop after the next loop iteration.
+
+Each iteration of the main loop performs the following actions in this exact order:
 
 ### 1. Handle events
 
-Runs `LE_INPUT->update()`, which means, the game will record every button press at this point.
+Runs `LE_INPUT->update()`, meaning the game records all input events at this point.
 
-### update
+### 2. Update
 
-The `LE_FSM->update()` method is executed, this will run the update() method of the current state in the LE_FSM queue.
+Executes `LE_FSM->update()`, which calls the `update()` method of the current state in the FSM queue.
 
-### Render
+### 3. Render
 
-During the render routine, all windows will be cleaned up with white filling the entire windows for every window. After that, a call to `LE_FSM->render()` is done to render every state in the queue; this will give the effect that the stacked states are paused behind the current state which is the only one being updated at the moment.
+During rendering, all windows are cleared with a white background. Then, `LE_FSM->render()` is called to render every state in the queue. This creates the effect of stacked states, where only the top state is updated while others remain visible but paused.
 
-At the end, Lambda Engine instruct SDL to update every window opened using the `LE_GAME-createWindow` method.
+Finally, Lambda Engine instructs SDL to update all windows created with the `LE_GAME->createWindow` method.
 
-
-## Usage example:
-
+## Usage example
 
 ```cpp
 int main () {
