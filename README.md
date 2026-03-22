@@ -120,6 +120,14 @@ rm -rf SDL_mixer
 sudo ldconfig
 ```
 
+Check they are installed
+```
+pkg-config --modversion sdl2
+pkg-config --modversion SDL2_image
+pkg-config --modversion SDL2_ttf
+pkg-config --modversion SDL2_mixer
+```
+
 
 ### SDL2
 
