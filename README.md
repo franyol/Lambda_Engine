@@ -19,9 +19,9 @@ cd build
 sudo make install
 ```
 
-After this you can build your executables using the library by using the flag
+After this you can build your executables using the library by using the flags
 ```
--llambda_engine
+-llambda_engine -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 ```
 
 ## Windows Installation
