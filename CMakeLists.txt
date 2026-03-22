@@ -64,27 +64,41 @@ endif()
 # Get a list of directories within basedir
 file(GLOB dirs LIST_DIRECTORIES true "${basedir}/*")
 
-# Iterate over the list of directories and add them as subdirectories
+# Iterate over the list of directories
 foreach(dir ${dirs})
     if(IS_DIRECTORY ${dir})
-        message(STATUS "Adding subdirectory: ${dir}")
-        add_subdirectory(${dir})
+        message(STATUS "Scanning directory: ${dir}")
 
-        # List .cpp and .h files in the directory
-        file(GLOB_RECURSE SOURCES "${dir}/*.cpp" "${dir}/*.h")
+        # Get subdirectories inside ${dir}
+        file(GLOB children RELATIVE ${dir} ${dir}/*)
 
-        # Add source files to the library target
-        message(STATUS "Adding sources: ${SOURCES}")
-        target_sources(lambda_engine PRIVATE ${SOURCES})
+        foreach(subdir ${children})
+            if(IS_DIRECTORY ${dir}/${subdir})
+                message(STATUS "Processing module: ${dir}/${subdir}")
 
-        # Include directory for header files
-        include_directories(${dir})
+                # Add subdirectory (if it has its own CMakeLists.txt)
+                if(EXISTS ${dir}/${subdir}/CMakeLists.txt)
+                    add_subdirectory(${dir}/${subdir})
+                endif()
 
-        # Install all header files in the directory
-        file(GLOB_RECURSE HEADERS "${dir}/*.h")
-        foreach(header ${HEADERS})
-            get_filename_component(header_path "${header}" DIRECTORY)
-            install(FILES "${header}" DESTINATION include)
+                # Collect sources and headers
+                file(GLOB SRC_FILES "${dir}/${subdir}/src/*.cpp")
+                file(GLOB HEADER_FILES "${dir}/${subdir}/include/*.h")
+
+                message(STATUS "Sources: ${SRC_FILES}")
+                message(STATUS "Headers: ${HEADER_FILES}")
+
+                # Add to target
+                target_sources(lambda_engine PRIVATE ${SRC_FILES} ${HEADER_FILES})
+
+                # Include directory
+                target_include_directories(lambda_engine PRIVATE
+                    ${dir}/${subdir}/include
+                )
+
+                # Install headers
+                install(FILES ${HEADER_FILES} DESTINATION include)
+            endif()
         endforeach()
     endif()
 endforeach()
