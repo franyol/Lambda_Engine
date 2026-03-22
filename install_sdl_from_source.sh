@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 set -e  # stop on error
 
+echo "== Installing dependencies =="
+
+sudo apt update
+sudo apt install -y \
+  build-essential cmake git pkg-config \
+  libasound2-dev libpulse-dev libaudio-dev libjack-dev \
+  libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxi-dev libxss-dev \
+  libgl1-mesa-dev libdbus-1-dev libudev-dev libwayland-dev libxkbcommon-dev \
+  libdrm-dev libgbm-dev \
+  libfreetype6-dev libharfbuzz-dev \
+  libpng-dev libjpeg-dev libtiff-dev libwebp-dev \
+  libvorbis-dev libogg-dev libflac-dev libmpg123-dev libopus-dev
+
 echo "== Cleaning previous SDL2 installations =="
 
 sudo rm -rf /usr/local/include/SDL2

@@ -52,6 +52,11 @@ sudo apt install -y \
 
 ### from scratch
 
+you can run this script that builds everything from the github repositories:
+```
+./install_sdl_from_source.sh 
+```
+
 ### Remove previous installations
 
 SDL2 if you used apt:
