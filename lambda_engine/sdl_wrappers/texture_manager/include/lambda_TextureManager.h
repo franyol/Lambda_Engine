@@ -65,7 +65,7 @@
              * windows if they share an onject with the same textureId.
              *
              * For that reason, windowId is not an existing member of LE_Tile class.
-             * 
+             *
              * @see LE_TextureManager::draw
              * Example: Using the same LE_Tile object for two windows:
              *
@@ -107,7 +107,7 @@
              * */
             ~LE_Tile () {}
 
-            /** 
+            /**
              * @brief Get class members
              *
              * @param m_textureId ptr where to save Texture id
@@ -117,7 +117,7 @@
              * @param m_w ptr where to save width
              * */
             void query ( std::string* m_textureId = nullptr,
-                         int* m_x = nullptr, int* m_y = nullptr, 
+                         int* m_x = nullptr, int* m_y = nullptr,
                          int* m_h = nullptr, int* m_w = nullptr );
 
             void set_x ( int m_x ) { x = m_x; }
@@ -137,7 +137,7 @@
      * only work for the window it was created; a SDL_Texture* mapping
      * to sort by ID all the textures created for that renderer (which
      * can'y neither be used in a different one); and finally a mapping
-     * of LE_Tile* objects, which, as we stated in LE_Tile class, 
+     * of LE_Tile* objects, which, as we stated in LE_Tile class,
      * can be used in several windows (if they both share textureId's and
      * probably also loaded the same textures for their own renderer)
      * */
@@ -173,8 +173,8 @@
              * @param win SDL_Window
              * @param ren SDL_Renderer generated from that window
              * */
-            LE_Window ( SDL_Window* win, SDL_Renderer* ren ) { 
-                sdl_window = win; 
+            LE_Window ( SDL_Window* win, SDL_Renderer* ren ) {
+                sdl_window = win;
                 sdl_renderer = ren;
             }
             /**
@@ -185,8 +185,8 @@
              *
              * @see LE_Window::clean
              * */
-            ~LE_Window () { 
-                clean(); 
+            ~LE_Window () {
+                clean();
                 SDL_DestroyRenderer( sdl_renderer );
                 SDL_DestroyWindow( sdl_window );
             }
@@ -275,7 +275,7 @@
 
             /**
              * @brief get Tile by id
-             * 
+             *
              * Returns a nullptr if there is no tile associated with
              * the tileId provided.
              *
@@ -303,7 +303,7 @@
      * @brief Manages Window, Texture and Tile creation in a single project
      *
      * This class is a singleton, the LE_TextureManager instance is initialized
-     * when LE_Init is called. To get access  to the instance use 
+     * when LE_Init is called. To get access  to the instance use
      * LE_TextureManager::Instance() static method, or the macro LE_TEXTURE which
      * calls the same function.
      *
@@ -322,17 +322,17 @@
         private:
 
             /**
-             * @brief Saves wether SDL has been initialized by the texture manager 
+             * @brief Saves wether SDL has been initialized by the texture manager
              * */
             bool sdl_initialized;
 
-            /** 
-             * @brief Saves wether SDL Image has been initialized by the texture manager 
+            /**
+             * @brief Saves wether SDL Image has been initialized by the texture manager
              * */
             bool sdl_image_initialized;
 
-            /** 
-             * @brief Saves wether SDL TTF has been initialized by the texture manager 
+            /**
+             * @brief Saves wether SDL TTF has been initialized by the texture manager
              * */
             bool sdl_ttf_initialized;
 
@@ -360,9 +360,9 @@
              *
              * Initializes SDL, SDL Image and SDL TTF
              * */
-            LE_TextureManager () { 
+            LE_TextureManager () {
                 sdl_initialized = sdl_image_initialized = sdl_ttf_initialized = false;
-                init(); 
+                init();
             }
 
         public:
@@ -374,7 +374,7 @@
              * */
             ~LE_TextureManager () { clean(); }
 
-            /** 
+            /**
              * @brief Initializes SDL and it's extensions
              * */
             void init ();
@@ -400,11 +400,11 @@
              * @param hidden Hide this window when created
              * @param resizable Window is resizable
              * */
-            Uint32 createWindow ( 
-                   const char* title, 
-                   int h, 
-                   int w, 
-                   bool full_screen = false, 
+            Uint32 createWindow (
+                   const char* title,
+                   int h,
+                   int w,
+                   bool full_screen = false,
                    bool input_focus = false,
                    bool hidden = false,
                    bool borderless = false,
@@ -447,7 +447,7 @@
                 auto it = windows.find(windowId);
                 if (it != windows.end()) {
                     SDL_GetWindowSize ( it->second->getWindow(), width, height );
-                } 
+                }
             }
 
             /**
@@ -460,7 +460,7 @@
                 auto it = windows.find(windowId);
                 if (it != windows.end()) {
                     return it->second->getRenderer();
-                } 
+                }
                 return nullptr;
             }
 
@@ -471,8 +471,8 @@
              * @param filePath PNG file path
              * @param textureId the generated texture will be refferenced by it
              * */
-            void loadTexture ( Uint32 windowId, 
-                    std::string filePath, 
+            void loadTexture ( Uint32 windowId,
+                    std::string filePath,
                     std::string textureId );
 
             /**
@@ -487,6 +487,21 @@
                 if ( it != windows.end() ) {
                     it->second->addTexture( textureId, nT );
                 }
+            }
+
+            void getTextureSize ( Uint32 windowId, std::string textureId,
+                    int* height, int* width ) {
+                auto it = windows.find(windowId);
+                if (it == windows.end()) {
+                    *height = *width = -1;
+                    return;
+                }
+
+                SDL_Texture* texture = it->second->getTexture(textureId);
+                if (texture != NULL)
+                    SDL_QueryTexture ( texture, NULL, NULL, width, height );
+
+                return;
             }
 
             /**
@@ -577,8 +592,8 @@
              *
              * @return true if all subsystems were initialized
              * */
-            bool EverythingWasInit() { 
-                return ( sdl_initialized && sdl_image_initialized && sdl_ttf_initialized ); 
+            bool EverythingWasInit() {
+                return ( sdl_initialized && sdl_image_initialized && sdl_ttf_initialized );
             }
 
             /**
@@ -655,7 +670,7 @@
              * @return true if the draw was completed without error
              * */
             bool draw ( Uint32 windowId, std::string tileId,
-                        int x, int y, double h = 1, double w = 1, 
+                        int x, int y, double h = 1, double w = 1,
                         bool scale = true, bool flipv = false,
                         bool fliph = false, const double angle = 0 );
 
@@ -668,7 +683,7 @@
              *
              * @param windowId
              * @param textureId texture to be set as target
-             * 
+             *
              * Example: Blend two tiles together
              * @code
              * #include <lambda.h>
@@ -707,15 +722,15 @@
              * }
              * @endcode
              * */
-            void createTargetTexture ( Uint32 windowId, std::string textureId, 
+            void createTargetTexture ( Uint32 windowId, std::string textureId,
                                        int h, int w ) {
                 auto it = windows.find ( windowId );
                 if ( it == windows.end() ) {
                     return;
                 }
 
-                SDL_Texture* targetTexture = SDL_CreateTexture ( 
-                        it->second->getRenderer(), 
+                SDL_Texture* targetTexture = SDL_CreateTexture (
+                        it->second->getRenderer(),
                         SDL_PIXELFORMAT_RGBA8888,
                         SDL_TEXTUREACCESS_TARGET,
                         w, h );
@@ -731,7 +746,7 @@
             /**
              * @brief sets render target to a texture
              *
-             * The texture must have been created using 
+             * The texture must have been created using
              * LE_TextureManager::createTargetTexture
              *
              * @param windowId
@@ -740,8 +755,8 @@
             void setRenderTarget ( Uint32 windowId, std::string textureId ) {
                 auto it = windows.find ( windowId );
                 if ( it == windows.end() ) return;
-                
-                SDL_SetRenderTarget ( it->second->getRenderer(), 
+
+                SDL_SetRenderTarget ( it->second->getRenderer(),
                         it->second->getTexture( textureId ) );
             }
 
@@ -761,14 +776,14 @@
              * @brief set SDL renderer blend mode
              *
              * @param blendMode LE_BlendMode
-             * @param windowId window to apply the blendmode, if no other option is 
-             * applied, the blend mode is applied to the renderer, use 
+             * @param windowId window to apply the blendmode, if no other option is
+             * applied, the blend mode is applied to the renderer, use
              * LE_BlendMode::none to restore it.
-             * @param textureId optional; if set, the blendmode is only applied 
+             * @param textureId optional; if set, the blendmode is only applied
              * for this texture
              * */
-            void setBlendMode ( LE_BlendMode blendMode, 
-                    Uint32 windowId, 
+            void setBlendMode ( LE_BlendMode blendMode,
+                    Uint32 windowId,
                     std::string textureId = "" );
 
             /**
