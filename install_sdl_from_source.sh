@@ -12,7 +12,8 @@ sudo apt install -y \
   libdrm-dev libgbm-dev \
   libfreetype6-dev libharfbuzz-dev \
   libpng-dev libjpeg-dev libtiff-dev libwebp-dev \
-  libvorbis-dev libogg-dev libflac-dev libmpg123-dev libopus-dev
+  libvorbis-dev libogg-dev libflac-dev libmpg123-dev libopus-dev \
+  libfluidsynth-dev
 
 echo "== Cleaning previous SDL2 installations =="
 

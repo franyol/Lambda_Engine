@@ -6,6 +6,24 @@ If it turns out that I actually made a functional game with this (lmao) and you 
 
 If I haven't done anything functional with this, use at your own risk, as I might probably still be making changes to the base functionalities that could break something since the project is still not sturdy enough.
 
+## Linux Installation
+
+```
+cmake -S . -B build 
+```
+
+then install it
+
+```
+cd build
+sudo make install
+```
+
+After this you can build your executables using the library by using the flag
+```
+-llambda_engine
+```
+
 ## Windows Installation
 
 We use MinGW for building the project, but you can change it depending on where you have SDL installed

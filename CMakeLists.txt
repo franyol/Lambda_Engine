@@ -16,10 +16,10 @@ set(basedir lambda_engine)
 # LINUX SDL INCLUSION
 if(UNIX AND NOT APPLE)
     # Find SDL2, SDL2_image, SDL2_ttf, and SDL2_mixer
-    find_package(SDL2 REQUIRED)
-    find_package(SDL2_image REQUIRED)
-    find_package(SDL2_ttf REQUIRED)
-    find_package(SDL2_mixer REQUIRED)
+    #find_package(SDL2 REQUIRED)
+    #find_package(SDL2_image REQUIRED)
+    #find_package(SDL2_ttf REQUIRED)
+    #find_package(SDL2_mixer REQUIRED)
 
     # Include directories for SDL dependencies
     include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_MIXER_INCLUDE_DIRS})
@@ -30,7 +30,7 @@ endif()
 
 # WINDOWS SDL INCLUSION
 if(WIN32)
-    
+
     # Set the path to SDL2
     set(SDL2_PATH "C:/mingw_dev_lib")
 
@@ -42,7 +42,7 @@ if(WIN32)
 
     # Include SDL2 headers
     include_directories(${SDL2_INCLUDE_DIR})
-    
+
     # Link SDL dependencies
     target_link_libraries(lambda_engine PRIVATE
         "${SDL2_LIBRARY_DIR}/libSDL2.a" # or libSDL2.dll.a if necessary
@@ -52,7 +52,7 @@ if(WIN32)
         "${SDL2_LIBRARY_DIR}/libSDL2_ttf.a"
         # Link other SDL2 dependencies here
     )
-    
+
     # Copy SDL2 DLLs to the executable directory during build
     #add_custom_command(TARGET lambda_engine POST_BUILD
     #    COMMAND ${CMAKE_COMMAND} -E copy
