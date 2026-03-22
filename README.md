@@ -1,50 +1,79 @@
 # Welcome to Lambda Engine
 
-I am too stuborn to use regular game engines, so I built one myself using SDL2 as a base.
+## Table of Contents
+- [Linux Installation](#linux-installation)
+- [Windows Installation](#windows-installation)
+- [Linux installation of SDL](#linux-installation-of-sdl)
+  - [SDL2 base APT Debian](#sdl2-base-apt-debian)
+  - [Build dependencies](#build-dependencies)
+  - [Remove previous installations](#remove-previous-installations)
 
-If it turns out that I actually made a functional game with this (lmao) and you are a corius being wanting to see how, you are welcome, I will try to document this as best as I can.
+---
 
-If I haven't done anything functional with this, use at your own risk, as I might probably still be making changes to the base functionalities that could break something since the project is still not sturdy enough.
+I was too stubborn to use existing game engines, so I decided to build one myself using SDL2 as a base.
+
+If this project eventually turns into a functional game (lmao) and you’re curious about how it works, you’re welcome to explore it. I’ll do my best to document everything clearly.
+
+If not, use it at your own risk. The project is still evolving, and core features may change or break as development continues.
+
+---
 
 ## Linux Installation
 
-```
+Clone the repo and build from the root:
+
+```bash
 cmake -S . -B build 
 ```
 
-then install it
+Then install it:
 
-```
+```bash
 cd build
 sudo make install
 ```
 
-After this you can build your executables using the library by using the flags
-```
+After this, you can build your executables using the library with the following flags:
+
+```bash
 -llambda_engine -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 ```
 
+---
+
 ## Windows Installation
 
-We use MinGW for building the project, but you can change it depending on where you have SDL installed
+I use MinGW to build the project on windows, but you can adapt it depending on where SDL is installed on your system.
 
-Go to project root and run:
+From the project root, run:
 
-Change "C:/lambda_engine_dev_lib" with the installation directory you want it to be
+Replace "C:/lambda_engine_dev_lib" with your desired installation directory.
 
 ```
 cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:/lambda_engine_dev_lib"
 ```
 
-Then go to the build directory to build and install it:
+Then go to the build directory to build and install:
 
-In my case I will use mingw32-make to install it
+In my case, I use mingw32-make:
 
 ```
 mingw32-make install
 ```
 
+---
+
 ## Linux installation of SDL
+
+You can follow the detailed steps below, or simply run the script to install/update SDL2 and its dependencies:
+
+```bash
+./install_sdl_from_source.sh
+```
+
+This installs everything directly from the latest official SDL GitHub repositories. To uninstall, follow the manual steps below, since this setup is not managed by your package manager.
+
+---
 
 ### SDL2 base APT Debian
 
@@ -52,7 +81,6 @@ mingw32-make install
 sudo apt-get install libsdl2-2.0-0 
 sudo apt install libsdl2-dev
 ```
-
 
 ### Build dependencies:
 ```
@@ -68,16 +96,9 @@ sudo apt install -y \
   libvorbis-dev libogg-dev libflac-dev libmpg123-dev libopus-dev
 ```
 
-### from scratch
-
-you can run this script that builds everything from the github repositories:
-```
-./install_sdl_from_source.sh 
-```
-
 ### Remove previous installations
 
-SDL2 if you used apt:
+If SDL2 was installed via apt:
 ```
 sudo apt purge libsdl2-dev libsdl2-2.0-0
 sudo apt autoremove
@@ -143,15 +164,10 @@ rm -rf SDL_mixer
 sudo ldconfig
 ```
 
-Check they are installed
+Check installation:
 ```
 pkg-config --modversion sdl2
 pkg-config --modversion SDL2_image
 pkg-config --modversion SDL2_ttf
 pkg-config --modversion SDL2_mixer
 ```
-
-
-### SDL2
-
-
