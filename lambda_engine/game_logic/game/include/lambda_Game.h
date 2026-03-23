@@ -77,7 +77,7 @@
             static void destroyInstance();
 
             /**
-             * @brief get LE_Game::deltaTime
+             * @brief get LE_Game::deltaTime in milliseconds
              * */
             double getDeltaTime ();
 
@@ -103,11 +103,21 @@
              * @param input_focus Sets the focus to this window
              * @param borderless Eliminates the window borderw (and close button)
              * @param resizable User can resize the window
+             * @param gpu Tell SDL to use gpu when available
+             *
+             * @return Window ID
              * */
             Uint32 createWindow ( const char* title, int w, int h,
                    bool full_screen = false, bool input_focus = false,
                    bool hidden = false, bool borderless = false,
-                   bool resizable = false );
+                   bool resizable = false);
+
+            /**
+             * @brief add an existing window
+             *
+             * @return window ID
+             * */
+            Uint32 addWindow ( SDL_Window* newWindow );
 
             /**
              * @brief get window Id
@@ -118,7 +128,7 @@
             Uint32 getWindow ( int idx );
 
             /**
-             * @brief returns if the game loop is still running
+             * @brief returns true if the game loop is still running
              * */
             bool isRunning ( void );
 

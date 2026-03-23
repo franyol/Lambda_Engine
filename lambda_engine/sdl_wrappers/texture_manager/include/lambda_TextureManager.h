@@ -399,6 +399,7 @@
              * @param input_focus Set Input focus on this window
              * @param hidden Hide this window when created
              * @param resizable Window is resizable
+             * @param gpu SDL will try to use gpu on rendering
              * */
             Uint32 createWindow (
                    const char* title,
@@ -408,7 +409,14 @@
                    bool input_focus = false,
                    bool hidden = false,
                    bool borderless = false,
-                   bool resizable = false );
+                   bool resizable = false);
+
+            /**
+             * @brief add an existing window
+             *
+             * @return window ID
+             * */
+            Uint32 addWindow ( SDL_Window* newWindow );
 
             /**
              * @brief Cleans tiles and textures on a window

@@ -50,6 +50,12 @@ Uint32 LE_Game::createWindow ( const char* title, int w, int h,
     return windowId;
 }
 
+Uint32 LE_Game::addWindow ( SDL_Window* newWindow ) {
+    Uint32 windowId = LE_TEXTURE->addWindow( newWindow );
+    windows.push_back ( windowId );
+    return windowId;
+}
+
 Uint32 LE_Game::getWindow ( int idx ) {
     return windows.at(idx);
 }

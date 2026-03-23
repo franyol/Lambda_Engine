@@ -33,6 +33,39 @@ LE_Quit();
 ## Managing windows
 
 Lambda Engine allows you to work with multiple windows. You can create a window using the `createWindow` method. This function returns a window ID that you can later use to manage where your game objects are rendered.
+```cpp
+/**
+ * @brief Creates a new window
+ *
+ * @param title window title
+ * @param w window width in pixels
+ * @param h window height in pixels
+ * @param full_screen Expand the window to fill the screen
+ * @param input_focus Sets the focus to this window
+ * @param borderless Eliminates the window borderw (and close button)
+ * @param resizable User can resize the window
+ * @param gpu Tell SDL to use gpu when available
+ *
+ * @return Window ID
+ * */
+Uint32 createWindow ( const char* title, int w, int h,
+        bool full_screen = false, bool input_focus = false,
+        bool hidden = false, bool borderless = false,
+        bool resizable = false);
+```
+
+If you need more control over your windows creation, you can also create your window as you wish with `addWindow`, which receives an SDL_Window object:
+
+```cpp
+/**
+ * @brief add an existing window
+ *
+ * @return window ID
+ * */
+Uint32 addWindow ( SDL_Window* newWindow );
+```
+
+Both these methods then call the TextureManager which creates a LE_Window object and a renderer created with SDL_RENDERER_ACCELERATED option enabled, associated to that window.
 
 ## Fixing a Framerate
 
@@ -82,10 +115,7 @@ int main () {
         cerr << "Could not initialize Lambda Engine" << endl;
     }
 
-    mainWindow = LE_GAME->createWindow ( "my game", SCREEN_W, SCREEN_H, true );
-    LE_TEXTURE->createTargetTexture ( mainWindow, "mainView", SCREEN_H, SCREEN_W );
-    LE_TEXTURE->addTile ( mainWindow, "mainView", "mainViewTile" );
-    LE_TEXTURE->getWindowSize ( mainWindow, &windowHeight, &windowWidth );
+    Uint32 mainWindow = LE_GAME->createWindow ( "my game", SCREEN_W, SCREEN_H, true );
 
     LE_GAME->fixFramerate ( 60 );
     LE_FSM->push_back ( new SimpleGame() );

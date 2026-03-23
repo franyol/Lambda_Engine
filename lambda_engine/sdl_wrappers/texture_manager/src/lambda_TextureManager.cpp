@@ -18,7 +18,7 @@ void LE_Window::clean() {
         SDL_DestroyTexture( it->second );
     }
     sdl_textures.clear();
-    
+
     for ( auto it = tileSet.begin(); it != tileSet.end(); it++ ) {
         delete it->second;
     }
@@ -98,7 +98,23 @@ Uint32 LE_TextureManager::createWindow (
     return winId;
 }
 
-void LE_TextureManager::loadTexture ( Uint32 windowId, 
+Uint32 LE_TextureManager::addWindow ( SDL_Window* newWindow ) {
+    SDL_Renderer* newRenderer;
+
+    newRenderer = SDL_CreateRenderer ( newWindow, -1, SDL_RENDERER_ACCELERATED );
+    if ( newRenderer == NULL ) {
+        cerr << "Error initializing renderer: " << SDL_GetError() << endl;
+        SDL_DestroyWindow ( newWindow );
+        return 0;
+    }
+
+    Uint32 winId = SDL_GetWindowID ( newWindow );
+
+    windows[winId] = new LE_Window ( newWindow, newRenderer );
+    return winId;
+}
+
+void LE_TextureManager::loadTexture ( Uint32 windowId,
         std::string filePath, std::string textureId ) {
 
     auto it = windows.find( windowId );
@@ -145,17 +161,17 @@ void LE_TextureManager::createTile ( Uint32 windowId, std::string textureId,
             " doesn't exist" << endl;
         return;
     }
-    
+
     if ( h == 0 || w == 0 ) {
         SDL_QueryTexture ( it->second->getTexture ( textureId ),
-                NULL, NULL, &w, &h );   
+                NULL, NULL, &w, &h );
     }
     it->second->addTile( tileId, new LE_Tile( textureId, x, y, h, w ) );
 }
 
 bool LE_TextureManager::draw ( Uint32 windowId, std::string tileId, int x, int y, double h, double w,
        bool scale, bool flipv, bool fliph, const double angle) {
-    
+
     auto it = windows.find( windowId );
     if ( it == windows.end() ) {
         cerr << "Error drawing tile: window id " << windowId <<
@@ -165,7 +181,7 @@ bool LE_TextureManager::draw ( Uint32 windowId, std::string tileId, int x, int y
 
     LE_Tile* tile = it->second->getTile ( tileId );
     if ( tile == nullptr ) {
-        cerr << "Error drawing tile: tile Id: " << tileId 
+        cerr << "Error drawing tile: tile Id: " << tileId
             << " doesn't exist" << endl;
         return false;
     }
@@ -184,7 +200,7 @@ bool LE_TextureManager::draw ( Uint32 windowId, std::string tileId, int x, int y
 
     dst.x = x;
     dst.y = y;
-    
+
     if ( scale ) {
         dst.w = src.w * w;
         dst.h = src.h * h;
@@ -202,8 +218,8 @@ bool LE_TextureManager::draw ( Uint32 windowId, std::string tileId, int x, int y
     return true;
 }
 
-void LE_TextureManager::setBlendMode ( LE_BlendMode blendMode, 
-        Uint32 windowId, 
+void LE_TextureManager::setBlendMode ( LE_BlendMode blendMode,
+        Uint32 windowId,
         std::string textureId ) {
     auto it = windows.find ( windowId );
     if ( it == windows.end() ) {
@@ -222,7 +238,7 @@ void LE_TextureManager::setBlendMode ( LE_BlendMode blendMode,
         SDL_Texture* temp = it->second->getTexture ( textureId );
         if ( temp == nullptr ) {
             std::cerr << "Error setting texture blend mode: "
-                << "Texture id: " << textureId << " doesn't exist" 
+                << "Texture id: " << textureId << " doesn't exist"
                 << std::endl;
             return;
         } else {
@@ -266,7 +282,7 @@ void set_onRead ( const Attr& attr, const std::string value ) {
 }
 
 void LE_TextureManager::loadFromXmlFile ( std::string filePath, Uint32 windowId ) {
-    
+
     LE_XMLNode mainNode ( "TILESETS" ),
                textureN ( "texture" ),
                setN ( "set" );
