@@ -7,4 +7,4 @@
 // Example usage
 // #include "config.h"
 //
-//std::string font_path = std::string(ASSET_DIR) + "/fonts/myfont.ttf";
+//std::string font_path = std::string(LE_ASSET_DIR) + "/fonts/myfont.ttf";

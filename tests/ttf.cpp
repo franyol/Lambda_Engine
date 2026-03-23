@@ -2,12 +2,14 @@
 #include <string>
 
 int main () {
-    
+
     LE_Init();
 
     Uint32 mainWindow = LE_TEXTURE->createWindow( "Textbox", 480, 640 );
 
-    LE_TEXT->loadFont( "Raleway-Black.ttf", 22, "myFont" );
+    std::string font_path = "/usr/local/share/lambda_engine/fonts/Bungee/Bungee-Regular.ttf";
+
+    LE_TEXT->loadFont( font_path, 22, "myFont" );
 
     int lineSkip;
     int n;
