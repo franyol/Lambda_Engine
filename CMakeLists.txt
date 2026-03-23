@@ -7,6 +7,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG_BUILD)
 endif()
 
+add_compile_definitions(ASSET_DIR="${CMAKE_INSTALL_PREFIX}/share/lambda_engine")
+
 # Create library target for lambda_engine
 add_library(lambda_engine STATIC)
 
@@ -123,3 +125,7 @@ install(FILES
     DESTINATION include
 )
 
+# Install static assets
+install (DIRECTORY assets/
+    DESTINATION share/lambda_engine
+)

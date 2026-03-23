@@ -10,6 +10,7 @@
     #include "lambda_TileMap.h"
     #include "lambda_TextManager.h"
     #include "lambda_XMLFabric.h"
+    #include "config.h"
 
 
     inline bool LE_Init () {
