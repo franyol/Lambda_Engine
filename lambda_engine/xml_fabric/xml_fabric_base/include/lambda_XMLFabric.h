@@ -21,12 +21,12 @@
      *
      * Base class to parse xml files into usable game objects
      * */
-    class LE_XMLNode 
+    class LE_XMLNode
     {
         private:
             // Tag name to search
             std::string tagName;
-    
+
             std::vector<LE_XMLNode*> childs;
             Attr attributes;
             std::string value;
@@ -67,33 +67,57 @@
              * @param node xml node object
              * @param pAttr parent attributes
              * */
-            void read ( xml_node<>* node, Attr& pAttr ) {
+            void read(xml_node<>* root, Attr& pAttr) {
+                struct StackItem {
+                    xml_node<>* xmlNode;
+                    LE_XMLNode* self;
+                    Attr parentAttr;
+                };
 
-                if ( std::strcmp( tagName.c_str(), node->name() ) != 0 ) {
-                    return;
-                }
+                std::vector<StackItem> stack;
+                stack.push_back({root, this, pAttr});
 
-                if ( node->value_size() > 0 ) value = node->value();
-                else value = "";
+                while (!stack.empty()) {
+                    StackItem current = stack.back();
+                    stack.pop_back();
 
-                attributes.clear();
+                    xml_node<>* node = current.xmlNode;
+                    LE_XMLNode* self = current.self;
 
-                for ( xml_attribute<>* attr = node->first_attribute(); attr;
-                   attr = attr->next_attribute() ) {
-                    attributes[attr->name()] = attr->value();
-                }
+                    // Tag check
+                    if (std::strcmp(self->tagName.c_str(), node->name()) != 0) {
+                        continue;
+                    }
 
-                // Merge parent attr
-                attributes.insert ( pAttr.begin(), pAttr.end() );
+                    // Value
+                    if (node->value_size() > 0)
+                        self->value = node->value();
+                    else
+                        self->value = "";
 
-                if ( onRead != nullptr ) {
-                    onRead ( attributes, value );
-                }
+                    // Attributes
+                    self->attributes.clear();
+                    for (xml_attribute<>* attr = node->first_attribute(); attr;
+                            attr = attr->next_attribute()) {
+                        self->attributes[attr->name()] = attr->value();
+                    }
 
-                for ( xml_node<>* nodeChild = node->first_node(); nodeChild; 
-                        nodeChild = nodeChild->next_sibling() ) {
-                    for ( LE_XMLNode* child : childs ) {
-                        child->read ( nodeChild, attributes );
+                    // Merge parent attributes
+                    self->attributes.insert(current.parentAttr.begin(),
+                            current.parentAttr.end());
+
+                    // Callback
+                    if (self->onRead != nullptr) {
+                        self->onRead(self->attributes, self->value);
+                    }
+
+                    // Traverse children
+                    for (xml_node<>* nodeChild = node->first_node(); nodeChild;
+                            nodeChild = nodeChild->next_sibling()) {
+
+                        for (LE_XMLNode* child : self->childs) {
+                            stack.push_back({nodeChild, child, self->attributes});
+                        }
                     }
                 }
             }
@@ -107,7 +131,7 @@
                 std::ifstream file (filePath.c_str());
                 std::string xmlString((std::istreambuf_iterator<char>(file)),
                         std::istreambuf_iterator<char>());
-                
+
                 // Parse XML
                 xml_document<> doc;
                 doc.parse<0>(&xmlString[0]);
@@ -116,7 +140,7 @@
                 if ( pAttr != nullptr )
                     parentAtt = *pAttr;
 
-                for ( xml_node<>* node = doc.first_node(); node; 
+                for ( xml_node<>* node = doc.first_node(); node;
                         node = node->next_sibling() )
                     read ( node, parentAtt );
             }
