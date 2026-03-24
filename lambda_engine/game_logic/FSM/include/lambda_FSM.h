@@ -36,7 +36,7 @@
                 LE_GameObject* newObject;
                 std::string objID;
 
-                NewGameObject ( LE_GameObject* _newObject, std::string _objID ): 
+                NewGameObject ( LE_GameObject* _newObject, std::string _objID ):
                     newObject(_newObject), objID(_objID) {}
             } NewGameObject;
 
@@ -48,7 +48,7 @@
             /**
              * @brief class constructor
              * */
-            LE_GameState () {}
+            LE_GameState ();
 
             /**
              * @brief class destructor
@@ -74,18 +74,14 @@
              * @param newObject object to be included
              * @param objId Game Object ID
              * */
-            void addObject ( LE_GameObject* newObject, std::string objId ) {
-                objectQueue.push_back( { newObject, objId } );
-            }
+            void addObject ( LE_GameObject* newObject, std::string objId );
 
             /**
              * @brief deletes an object from the state
              *
              * @param onjId Game Object ID
              * */
-            void popObject ( std::string objId ) {
-                objectDeleteQueue.push_back( objId );
-            }
+            void popObject ( std::string objId );
 
             /**
              * @brief get object by it's ID
@@ -93,13 +89,7 @@
              * @param objId Game Object ID
              * @return LE_GameObject*
              * */
-            LE_GameObject* getObject ( std::string objId ) {
-                auto it = gameObjects.find(objId);
-                if (it != gameObjects.end()) {
-                    return it->second;
-                }
-                return nullptr;
-            }
+            LE_GameObject* getObject ( std::string objId );
 
             /**
              * @brief updates all game Objects added to the state
@@ -114,14 +104,14 @@
             /**
              * @brief deallocates all game Objects added to the state
              * */
-            virtual void clean () { 
+            virtual void clean () {
                 for ( auto it = gameObjects.begin(); it != gameObjects.end(); it++ )
                     delete it->second;
-                gameObjects.clear(); 
+                gameObjects.clear();
                 for ( int i=0; i < objectQueue.size(); i++ ) {
                     delete objectQueue[i].newObject;
                 }
-                objectQueue.clear(); 
+                objectQueue.clear();
             }
     };
 
@@ -144,7 +134,7 @@
             /**
              * @brief class constructor
              * */
-            LE_StateMachine () {};
+            LE_StateMachine ();
 
             std::vector<LE_GameState*> changeQueue;
 
@@ -156,19 +146,14 @@
              *
              * calls to LE_StateMachine::clean
              * */
-            ~LE_StateMachine () { clean(); }
+            ~LE_StateMachine ();
 
             /**
              * @brief returns the singleton class ptr
              *
              * same as LE_FSM
              * */
-            static LE_StateMachine* Instance ( void ) {
-                if ( the_instance == nullptr ) {
-                    the_instance = new LE_StateMachine();
-                }
-                return the_instance;
-            }
+            static LE_StateMachine* Instance ( void );
 
             /**
              * @brief get current state objects
@@ -178,22 +163,14 @@
              *
              * return LE_GameState* ptr to the current state
              * */
-            LE_GameState* getCurrentState () {
-                if (statePool.size() < 1) return nullptr;
-                return statePool.back();
-            }
+            LE_GameState* getCurrentState ();
 
             /**
              * @brief destroys the class singleton
              *
              * deallocates all states
              * */
-            static void destroyInstance () {
-                if ( the_instance != nullptr ) {
-                    delete the_instance;
-                    the_instance = nullptr;
-                }
-            }
+            static void destroyInstance ();
 
             /**
              * @brief adds a generator function
@@ -211,26 +188,17 @@
              * LE_FSM->addGenerator (  "myState", myStateGenerator );
              * LE_FSM->push_back ( "myState" );
              * // Same as LE_FSM->push_back( new MyState() );
+             * // Handy to avoid circular imports
              * @endcode
              * */
-            void addGenerator ( std::string stateId, LE_GameState* (*func)() ) {
-                auto it = stateGenerators.find ( stateId );
-                if ( it != stateGenerators.end() ) {
-                    std::cout << stateId << " Is already mapped to a generator";
-                    return;
-                }
-                
-                stateGenerators[ stateId ] = func;
-            }
+            void addGenerator ( std::string stateId, LE_GameState* (*func)() );
 
             /**
              * @brief deletes a generator from ID
              *
              * @param stateId
              * */
-            void popGenerator ( std::string stateId ) {
-                stateGenerators.erase ( stateId );
-            }
+            void popGenerator ( std::string stateId );
 
             /**
              * @brief adds a new LE_GameState to the state machine
@@ -240,16 +208,7 @@
             /**
              * @brief adds a new LE_GameState to the state machine from a generator
              * */
-            void push_back ( std::string stateId ) {
-                auto it = stateGenerators.find ( stateId );
-                if ( it == stateGenerators.end() ) {
-                    std::cout << "Error pushing state " << stateId <<
-                        ": generator not found";
-                    return;
-                }
-                // Call generator
-                push_back (it->second());
-            }
+            void push_back ( std::string stateId );
 
             /**
              * @brief deletes statePool back and deallocates that game state
