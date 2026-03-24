@@ -10,6 +10,7 @@
     #include "lambda_TileMap.h"
     #include "lambda_TextManager.h"
     #include "lambda_XMLFabric.h"
+    #include "lambda_group_base.h"
     #include "config.h"
 
 

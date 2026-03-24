@@ -5,6 +5,7 @@
     #include <map>
     #include <string>
     #include "lambda_GameObject.h"
+    #include "lambda_group_base.h"
     #include <iostream>
 
     /**
@@ -32,6 +33,11 @@
              * */
             std::map<std::string, LE_GameObject*> gameObjects;
 
+            /**
+             * @brief map containing LE_Groups registered in this state
+             * */
+            std::map<std::string, LE_Group*> groups;
+
             typedef struct NewGameObject {
                 LE_GameObject* newObject;
                 std::string objID;
@@ -40,8 +46,20 @@
                     newObject(_newObject), objID(_objID) {}
             } NewGameObject;
 
+            /**
+             * @brief Queue of objects to be created on next lap
+             * */
             std::vector<NewGameObject> objectQueue;
+
+            /**
+             * @brief Queue of objects to be deleted on next lap
+             * */
             std::vector<std::string> objectDeleteQueue;
+
+            /**
+             * @brief Queue of groups to be deleted on next lap
+             * */
+            std::vector<std::string> groupDeleteQueue;
 
         public:
 
@@ -92,7 +110,47 @@
             LE_GameObject* getObject ( std::string objId );
 
             /**
-             * @brief updates all game Objects added to the state
+             * @brief add a new game object into the state
+             *
+             * @param newGroup object to be included
+             * @param objId Game Group ID
+             * */
+            void addGroup ( LE_Group* newGroup, std::string groupId );
+
+            /**
+             * @brief deletes an group from the state
+             *
+             * @param groupId Group ID
+             * */
+            void popGroup ( std::string groupId );
+
+            /**
+             * @brief get group by it's ID
+             *
+             * @param groupId Group ID
+             * @return LE_Group*
+             * */
+            LE_Group* getGroup ( std::string groupId );
+
+            /**
+             * @brief enables a group
+             *
+             * @param groupId Group ID
+             * */
+            void enableGroup ( std::string groupId );
+
+            /**
+             * @brief disables a group
+             *
+             * @param groupId Group ID
+             * */
+            void disableGroup ( std::string groupId );
+
+            /**
+             * @brief get group by it's ID
+             *
+             * @param groupId Group ID
+             * @return LE_Group*
              * */
             virtual void update ();
 

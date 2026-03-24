@@ -1,6 +1,7 @@
 #include <string>
 #include <map>
 #include "lambda_TextureManager.h"
+#include "lambda_group_base.h"
 
 #ifndef _LAMBDA_ENGINE_GAMEOBJ_H_
 #define _LAMBDA_ENGINE_GAMEOBJ_H_
@@ -35,31 +36,107 @@
             bool flipv;
             bool fliph;
 
+            /*
+             * @brief Object ID, this is defined when the object is
+             * registered to a LE_State
+             * */
+            std::string id;
+
             /**
              * @brief when true, object will be deleted in the next frame update
              * */
             bool destroy_me;
 
             /**
+             * @brief stores the groups this object is registered to
+             * */
+            std::map<std::string, LE_Group*> groups;
+
+            /**
              * @brief stores tiles as frames related to a game object
              * */
             std::map<std::string, LE_Frame> frames;
 
-            /** 
+            /**
              * @brief Intended for single sprite animation
-             * 
+             *
              * to animate more than one sprites you may need to
              * define a new map using this member as the id, similar
              * to frames memeber implementation
              * */
             std::string currentFrame;
         public:
-            
+
             /**
              * @brief class constructor
              * */
             LE_GameObject () {}
-            virtual ~LE_GameObject () {}
+
+            virtual ~LE_GameObject () { clean(); }
+
+            /**
+             * @brief Unregister the object from all groups
+             * */
+            virtual void clean() {
+                for (auto it = groups.begin(); it != groups.end(); it++) {
+                    it->second->deletedObject(id);
+                }
+                groups.clear();
+            }
+
+            /**
+             * @brief add a new game object into the state
+             *
+             * @param newGroup object to be included
+             * @param objId Game Group ID
+             * */
+            void addGroup ( LE_Group* newGroup, std::string groupId );
+
+            /**
+             * @brief deletes an group from the state
+             *
+             * Caution: use unregisterGroup and registerGroup to
+             * manage groups
+             *
+             * @param groupId Group ID
+             * */
+            void popGroup ( std::string groupId );
+
+            /**
+             * @brief deletes an group from the state
+             *
+             * @param groupId Group ID
+             * */
+            void unregisterGroup ( std::string groupId );
+
+            /**
+             * @brief deletes an group from the state
+             *
+             * @param groupId Group ID
+             * */
+            void registerGroup ( std::string groupId );
+
+            /**
+             * @brief get group by it's ID
+             *
+             * @param groupId Group ID
+             * @return LE_Group*
+             * */
+            LE_Group* getGroup ( std::string groupId );
+
+            /**
+             * @brief enables a group
+             *
+             * @param groupId Group ID
+             * */
+            void enableGroup ( std::string groupId );
+
+            /**
+             * @brief disables a group
+             *
+             * @param groupId Group ID
+             * */
+            void disableGroup ( std::string groupId );
 
             /**
              *  @brief destroys object in next frame
@@ -67,7 +144,7 @@
             virtual void pop () {
                 destroy_me = true;
             }
-            
+
             /**
              * @brief add your class initialization here
              *
@@ -78,7 +155,7 @@
              * inherit these default definitions.
              *
              * Make sure to define destroy_me to false here, or your obect
-             * will be destroyed immediately before even being able to be 
+             * will be destroyed immediately before even being able to be
              * drawn into screen
              * */
             virtual void setup () {
