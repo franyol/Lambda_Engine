@@ -62,19 +62,19 @@ class LE_Group {
         /**
          * @brief Executes when a game object is registered to the group
          * */
-        virtual void objRegisterHander(LE_GameObject* gameObj) {}
+        virtual void objRegisterHander(void* gameObj) {}
 
         /**
          * @brief Do an an action on all registered gameObject when updated
          *
          * Only if LE_Group::update is not overwritten
          * */
-        virtual void objUpdateHandler(LE_GameObject* gameObj) = 0;
+        virtual void objUpdateHandler(void* gameObj) = 0;
 
         /**
          * @brief Executes when a game Object is unregistered from the group
          * */
-        virtual void objUnregisterHandler(LE_GameObject* gameObj) {}
+        virtual void objUnregisterHandler(void* gameObj) {}
 
         /**
          * @brief Executes on every game loop
