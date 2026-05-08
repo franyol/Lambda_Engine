@@ -197,7 +197,7 @@
 
             std::vector<LE_GameState*> changeQueue;
 
-            std::map<std::string, LE_GameState* (*)()> stateGenerators;
+            std::map<std::string, std::function<LE_GameState*()>> stateGenerators;
         public:
 
             /**

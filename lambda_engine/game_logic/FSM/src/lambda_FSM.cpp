@@ -145,7 +145,7 @@ void LE_StateMachine::destroyInstance () {
     }
 }
 
-void LE_StateMachine::addGenerator ( std::string stateId, LE_GameState* (*func)() ) {
+void LE_StateMachine::addGenerator ( std::string stateId, std::function<LE_GameState*()> func ) {
     auto it = stateGenerators.find ( stateId );
     if ( it != stateGenerators.end() ) {
         std::cout << stateId << " Is already mapped to a generator";
