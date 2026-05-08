@@ -1,7 +1,8 @@
 #ifndef _LAMBDA_ENGINE_FSM_H_
 #define _LAMBDA_ENGINE_FSM_H_
 
-    #include <vector>
+    #include <functional>
+#include <vector>
     #include <map>
     #include <string>
     #include "lambda_GameObject.h"
@@ -249,7 +250,7 @@
              * // Handy to avoid circular imports
              * @endcode
              * */
-            void addGenerator ( std::string stateId, LE_GameState* (*func)() );
+            void addGenerator ( std::string stateId, std::function<LE_GameState*()> func );
 
             /**
              * @brief deletes a generator from ID
