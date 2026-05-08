@@ -20,6 +20,10 @@ void LE_Group::unregisterObject ( std::string objId ) {
     }
 }
 
+void LE_Group::setMainObject (LE_GameObject* gameObj) {
+    mainObj = gameObj;
+}
+
 void LE_Group::deletedObject ( std::string objId ) {
     gameObjects.erase(objId);
 }

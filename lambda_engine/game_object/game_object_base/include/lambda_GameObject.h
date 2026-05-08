@@ -110,6 +110,15 @@
             void unregisterGroup ( std::string groupId );
 
             /**
+             * @brief set this object as the group main object
+             *
+             * for one to many interactors
+             *
+             * @param groupId Group ID
+             * */
+            void setAsGroupMainObj ( std::string groupId );
+
+            /**
              * @brief deletes an group from the state
              *
              * @param groupId Group ID

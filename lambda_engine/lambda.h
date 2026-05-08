@@ -11,6 +11,8 @@
     #include "lambda_TextManager.h"
     #include "lambda_XMLFabric.h"
     #include "lambda_group_base.h"
+    #include "lambda_many_to_many.h"
+    #include "lambda_one_to_many.h"
     #include "config.h"
 
 

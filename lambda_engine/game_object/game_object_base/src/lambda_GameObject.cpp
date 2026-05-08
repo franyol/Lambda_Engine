@@ -24,6 +24,14 @@ void LE_GameObject::registerGroup ( std::string groupId ) {
     }
 }
 
+void LE_GameObject::setAsGroupMainObj ( std::string groupId ) {
+    LE_GameState *currentState = LE_FSM->getCurrentState();
+    LE_Group* gr = currentState->getGroup(groupId);
+    if (gr) {
+        gr->setMainObject(this);
+    }
+}
+
 LE_Group* LE_GameObject::getGroup ( std::string groupId ) {
     auto it = groups.find(groupId);
     if (it != groups.end()) {

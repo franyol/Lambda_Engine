@@ -23,6 +23,11 @@ class LE_Group {
          * */
         std::map<std::string, LE_GameObject*> gameObjects;
 
+        /**
+         * @brief main object for one to many interactions
+         * */
+        LE_GameObject* mainObj;
+
         /*
          * @brief Group ID, this is defined when the object is
          * registered to a LE_State
@@ -66,8 +71,6 @@ class LE_Group {
 
         /**
          * @brief Do an an action on all registered gameObject when updated
-         *
-         * Only if LE_Group::update is not overwritten
          * */
         virtual void objUpdateHandler(void* gameObj) = 0;
 
@@ -84,10 +87,17 @@ class LE_Group {
          * */
         virtual void update () {
             for ( auto it = gameObjects.begin(); it != gameObjects.end(); ++it ) {
-                LE_GameObject *gObj = it->second;
+                void *gObj = it->second;
                 objUpdateHandler(gObj);
             }
         }
+
+        /**
+         * @brief Set main game object for one to many interactors
+         *
+         * @param gameObj LE_GameObject* to be registered on the group
+         * */
+        void setMainObject (LE_GameObject* gameObj);
 
         /**
          * @brief Register a game object
