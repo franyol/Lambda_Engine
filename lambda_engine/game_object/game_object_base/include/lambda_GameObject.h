@@ -2,6 +2,7 @@
 #include <map>
 #include "lambda_TextureManager.h"
 #include "lambda_group_base.h"
+#include "lambda_events.h"
 
 #ifndef _LAMBDA_ENGINE_GAMEOBJ_H_
 #define _LAMBDA_ENGINE_GAMEOBJ_H_
@@ -67,6 +68,8 @@
             std::string currentFrame;
         public:
 
+            LE_Events events;
+
             /**
              * @brief class constructor
              * */
@@ -82,6 +85,7 @@
                     it->second->deletedObject(id);
                 }
                 groups.clear();
+                events.clean();
             }
 
             /**
@@ -182,7 +186,7 @@
             /**
              * @brief object update function
              *
-             * Use this method to update game object's members
+     * Use this method to update game object's members
              * acording to user input or your game necessities
              * */
             virtual void update () {}

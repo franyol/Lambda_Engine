@@ -9,6 +9,7 @@
     #include "lambda_AudioManager.h"
     #include "lambda_TileMap.h"
     #include "lambda_TextManager.h"
+    #include "lambda_events.h"
     #include "lambda_XMLFabric.h"
     #include "lambda_group_base.h"
     #include "lambda_many_to_many.h"
@@ -25,6 +26,7 @@
         LE_TILEMAP;
         LE_AUDIO;
         LE_TEXT;
+        LE_EVENTS;
 
         return true;
     }
@@ -38,6 +40,7 @@
         QUIT_LE_INPUT;
         QUIT_LE_TILEMAP;
         QUIT_LE_TEXTURE;
+        QUIT_LE_EVENTS;
     }
 
 #endif
