@@ -99,6 +99,7 @@ void LE_Game::mainLoop () {
 
         handleEvents();
         update();
+        LE_INPUT->setReleasedToIddle();
         render();
 
         frameTime = SDL_GetTicks() - frameStart;

@@ -1,6 +1,6 @@
 #include "lambda_events.h"
-#include <iostream>
 
+LE_Events* LE_Events::the_instance = nullptr;
 LE_EventBus::LE_EventBus() {}
 
 LE_EventBus::~LE_EventBus() {}
@@ -60,6 +60,12 @@ void LE_Events::registerCallback (std::string busId, Callback cb, std::string li
     LE_EventBus* bus = registerEventBus(busId);
 
     bus->subscribe(cb, listenerId);
+}
+
+void LE_Events::dropListener ( std::string listenerId ) {
+    for (auto it = eventBuses.begin(); it != eventBuses.end(); it++) {
+        it->second->unsubscribe(listenerId);
+    }
 }
 
 void LE_Events::emit (std::string busId, void* eventData) {

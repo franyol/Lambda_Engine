@@ -7,10 +7,13 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG_BUILD)
 endif()
 
-add_compile_definitions(ASSET_DIR="${CMAKE_INSTALL_PREFIX}/share/lambda_engine")
-
 # Create library target for lambda_engine
 add_library(lambda_engine STATIC)
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/lambda_engine/config/config.h.in
+    ${CMAKE_BINARY_DIR}/config.h
+)
 
 # Set base directory
 set(basedir lambda_engine)
@@ -104,6 +107,10 @@ foreach(dir ${dirs})
         endforeach()
     endif()
 endforeach()
+
+target_include_directories(lambda_engine PUBLIC
+    ${CMAKE_BINARY_DIR}
+)
 
 # Include rapidxml headers
 include_directories("${CMAKE_SOURCE_DIR}/rapidxml")

@@ -2,7 +2,6 @@
 #define _LAMBDA_EVENTS_H_
 
 #include <map>
-#include <vector>
 #include <string>
 #include <functional>
 
@@ -104,12 +103,12 @@ class LE_Events
          */
         std::map<std::string, LE_EventBus*> eventBuses;
 
-    public:
-
         /**
          * @brief Private constructor for singleton pattern.
          */
         LE_Events ();
+
+    public:
 
         /**
          * @brief Destroys the event manager.
@@ -168,6 +167,13 @@ class LE_Events
         void registerCallback (
             std::string busId,
             Callback cb,
+            std::string listenerId
+        );
+
+        /**
+         * @brief unregister all callbacks from listener id
+         * */
+        void dropListener (
             std::string listenerId
         );
 

@@ -110,6 +110,7 @@ class GO1: public LE_GameObject {
             w = 100;
             h = 100;
             scale = false;
+
             registerGroup("physics");
             registerGroup("hitboxes");
         }
@@ -170,7 +171,7 @@ class SimpleGame : public LE_GameState {
         void update() {
             LE_GameState::update();
 
-            if (LE_INPUT->getKeyState( SDLK_ESCAPE ) == keyState::pressed)
+            if (LE_INPUT->getKeyState( SDL_SCANCODE_ESCAPE ) == keyState::pressed)
                 LE_GAME->exit();
         }
 };

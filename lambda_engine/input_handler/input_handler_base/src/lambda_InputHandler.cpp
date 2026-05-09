@@ -5,9 +5,9 @@
 LE_InputHandler* LE_InputHandler::the_instance;
 
 LE_InputHandler::LE_InputHandler () {
-    mouse.left = keyState::iddle;
-    mouse.middle = keyState::iddle;
-    mouse.right = keyState::iddle;
+    mouse.left = keyState::idle;
+    mouse.middle = keyState::idle;
+    mouse.right = keyState::idle;
 }
 
 void LE_InputHandler::initJoysticks () {
@@ -21,7 +21,7 @@ void LE_InputHandler::initJoysticks () {
             if ( joy != NULL ) {
                 joysticks.push_back(joy);
             } else {
-                std::cerr << "Error opening joystick " << i << ": " 
+                std::cerr << "Error opening joystick " << i << ": "
                     << SDL_GetError() << std::endl;
             }
             SDL_JoystickEventState(SDL_ENABLE);
@@ -49,23 +49,31 @@ void LE_InputHandler::update() {
     while (SDL_PollEvent(&event)) {
         switch (event.type)
         {
-            case SDL_QUIT: 
+            case SDL_QUIT:
                 LE_Game::Instance()->exit();
                 break;
 
             /*
              * Note: keyState can be pressed or released, it starts in iddle by default
              * in case you want to manage actions when a button is released. In that case,
-             * set the keystate as iddle after handling the event with set_keyState() 
+             * set the keystate as iddle after handling the event with set_keyState()
              * method.
              * */
             case SDL_KEYDOWN:
-                if (  event.key.repeat == 0 )
-                    keys[(int)event.key.keysym.sym] = keyState::pressed;
+
+                if (event.key.repeat == 0)
+                    keys[event.key.keysym.scancode] =
+                        keyState::pressed;
+
                 break;
+
             case SDL_KEYUP:
-                if (  event.key.repeat == 0 )
-                    keys[(int)event.key.keysym.sym] = keyState::released;
+
+                if (event.key.repeat == 0)
+                    keys[event.key.keysym.scancode] =
+                        keyState::released;
+                    releasedKeys.push_back(event.key.keysym.scancode);
+
                 break;
 
             // Mouse events
@@ -84,19 +92,19 @@ void LE_InputHandler::update() {
                     case SDL_BUTTON_LEFT:
                         if ( event.button.state == SDL_PRESSED )
                             mouse.left = keyState::pressed;
-                        else 
+                        else
                             mouse.left = keyState::released;
                         break;
                     case SDL_BUTTON_MIDDLE:
                         if ( event.button.state == SDL_PRESSED )
                             mouse.middle = keyState::pressed;
-                        else 
+                        else
                             mouse.middle = keyState::released;
                         break;
                     case SDL_BUTTON_RIGHT:
                         if ( event.button.state == SDL_PRESSED )
                             mouse.right = keyState::pressed;
-                        else 
+                        else
                             mouse.right = keyState::released;
                         break;
                 }

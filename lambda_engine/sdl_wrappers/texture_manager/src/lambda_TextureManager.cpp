@@ -1,5 +1,6 @@
 #include "lambda_TextureManager.h"
 #include "lambda_XMLFabric.h"
+#include <config.h>
 
 using namespace std;
 
@@ -253,9 +254,19 @@ void LE_TextureManager::setBlendMode ( LE_BlendMode blendMode,
 
 
 void texture_onRead ( const Attr& attr, const std::string value ) {
+    std::string filepath = attr.at("filepath");
+
+    if (filepath.rfind("$/", 0) == 0) {
+        filepath.replace(
+                0,
+                1,
+                std::string(LE_ASSET_DIR)
+                );
+    }
+
     LE_TEXTURE->loadTexture (
             stoi(attr.at("windowId")),
-            attr.at("filepath"),
+            filepath,
             attr.at("id")
             );
 }

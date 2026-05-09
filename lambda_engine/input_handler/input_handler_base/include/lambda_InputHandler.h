@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <array>
 #include <vector>
 #include <map>
 
@@ -18,11 +19,11 @@
     /**
      * @brief clasificates the possible key states
      * */
-    typedef enum keyState {
+    enum class keyState {
         pressed,
         released,
-        iddle
-    } keyState;
+        idle
+    };
 
     /**
      * @brief stores mouse input information
@@ -56,7 +57,7 @@
              * @brief class destructor
              * */
             ~LE_InputHandler() {}
-            
+
             /**
              * @brief singleton instance
              * */
@@ -75,7 +76,9 @@
             /**
              * @brief saves keyboard key-states
              * */
-            std::map<int, keyState> keys;
+            std::array<keyState, SDL_NUM_SCANCODES> keys;
+
+            std::vector<SDL_Scancode> releasedKeys;
 
             /**
              * @brief saves mouse state
@@ -91,7 +94,7 @@
                 }
                 return the_instance;
             }
-            
+
             /**
              * @brief deallocates memory for LE_InputHandler
              * */
@@ -107,9 +110,23 @@
              * */
             MouseInput* getMouse () { return &mouse; }
 
-            void setMouseIddleLeft () { mouse.left = keyState::iddle; }
-            void setMouseIddleRight () { mouse.right = keyState::iddle; }
-            void setMouseIddleMiddle () { mouse.middle = keyState::iddle; }
+            void setMouseIdleLeft () { mouse.left = keyState::idle; }
+            void setMouseIdleRight () { mouse.right = keyState::idle; }
+            void setMouseIdleMiddle () { mouse.middle = keyState::idle; }
+
+            /**
+             * @brief sets every keystate to iddle after one loop in release
+             * */
+            void setReleasedToIddle() {
+                setMouseIdleMiddle();
+                setMouseIdleRight();
+                setMouseIdleLeft();
+
+                for (auto& scancode: releasedKeys) {
+                    keys[scancode] = keyState::idle;
+                }
+                releasedKeys.clear();
+            }
 
             /**
              * @brief initializes connected joysticks
@@ -120,20 +137,25 @@
             /**
              * @brief returns key state
              * */
-            keyState getKeyState( int sym ) const { 
-                auto it = keys.find(sym);
-                if (it != keys.end()) {
-                    return it->second;
-                } else {
-                    return keyState::iddle;
+            keyState getKeyState(int scancode) const {
+
+                if (scancode < 0 || scancode >= SDL_NUM_SCANCODES) {
+                    return keyState::idle;
                 }
+
+                return keys[scancode];
             }
 
             /**
              * @brief Sets a key as iddle
              * */
-            void setKeyIddle( int sym ) { 
-                keys[sym] = keyState::iddle;
+            void setKeyIdle(SDL_Scancode scancode) {
+
+                if (scancode >= SDL_NUM_SCANCODES) {
+                    return;
+                }
+
+                keys[scancode] = keyState::idle;
             }
 
             /**

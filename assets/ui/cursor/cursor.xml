@@ -1,0 +1,9 @@
+<TILESETS>
+    <texture id="cursor" filepath="$/assets/ui/cursor/cursor.png">
+        <set tile="black" x="0" y="0" h="32" w="32" />
+        <set tile="black-click" x="32" y="0" h="32" w="32" />
+        <set tile="white" x="0" y="32" h="32" w="32" />
+        <set tile="white-click" x="32" y="32" h="32" w="32" />
+    </texture>
+</TILESETS>
+

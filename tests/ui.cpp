@@ -8,12 +8,18 @@ Uint32 mainWindow;
 class SimpleGame : public LE_GameState {
     private:
         double dt;
+        LE_Cursor* cursor;
 
     public:
         void on_enter() {
             LE_TEXTURE->loadFromXmlFile ( "test.xml", mainWindow );
             LE_TILEMAP->loadFromXmlFile ( "test.xml", mainWindow );
-        }
+            LE_Cursor::init( mainWindow );
+
+            cursor = new LE_Cursor();
+
+            addObject(cursor, "cursor");
+       }
 
         void update() {
             LE_GameState::update();

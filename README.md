@@ -23,7 +23,7 @@ If not, use it at your own risk. The project is still evolving, and core feature
 Clone the repo and build from the root:
 
 ```bash
-cmake -S . -B build 
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
 
 Then install it:

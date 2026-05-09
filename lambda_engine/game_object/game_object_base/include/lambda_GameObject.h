@@ -1,11 +1,12 @@
+#ifndef _LAMBDA_ENGINE_GAMEOBJ_H_
+#define _LAMBDA_ENGINE_GAMEOBJ_H_
+
 #include <string>
 #include <map>
+#include <vector>
 #include "lambda_TextureManager.h"
 #include "lambda_group_base.h"
 #include "lambda_events.h"
-
-#ifndef _LAMBDA_ENGINE_GAMEOBJ_H_
-#define _LAMBDA_ENGINE_GAMEOBJ_H_
 
     /**
      * @brief groups a tile and a window Id
@@ -58,6 +59,8 @@
              * */
             std::map<std::string, LE_Frame> frames;
 
+            std::vector<std::string> registeredBuses;
+
             /**
              * @brief Intended for single sprite animation
              *
@@ -68,12 +71,10 @@
             std::string currentFrame;
         public:
 
-            LE_Events events;
-
             /**
              * @brief class constructor
              * */
-            LE_GameObject () {}
+            LE_GameObject ();
 
             virtual ~LE_GameObject () { clean(); }
 
@@ -85,8 +86,19 @@
                     it->second->deletedObject(id);
                 }
                 groups.clear();
-                events.clean();
+
+                // Destroy event buses and subscriptions
+                for (auto& busId : registeredBuses) {
+                    LE_EVENTS->uregisterEventBus(busId);
+                }
+                LE_EVENTS->dropListener(this->id);
             }
+
+            /**
+             * @brief creates an event bus with id self->id + name
+             * */
+            void addEventHandler ( std::string name, Callback cb );
+            void emitEvent ( std::string name, void* eventData );
 
             /**
              * @brief add a new game object into the state
@@ -171,17 +183,7 @@
              * will be destroyed immediately before even being able to be
              * drawn into screen
              * */
-            virtual void setup () {
-                // Initialize these members when redefining this function
-                // or just run LE_GameObject::setup(); and then add your own
-                // setup
-                x = y = 0;
-                h = w = 1;
-                angle = 0;
-                scale = true;
-                flipv = fliph = false;
-                destroy_me = false;
-            }
+            virtual void setup () {}
 
             /**
              * @brief object update function
