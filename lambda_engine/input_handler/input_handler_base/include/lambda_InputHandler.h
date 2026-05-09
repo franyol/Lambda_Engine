@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <array>
+#include <iostream>
 #include <vector>
 #include <map>
 

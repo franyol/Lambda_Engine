@@ -4,10 +4,26 @@
 
 LE_InputHandler* LE_InputHandler::the_instance;
 
-LE_InputHandler::LE_InputHandler () {
+LE_InputHandler::LE_InputHandler()
+    : joysticks(),
+      is_joysticks_initialized(false),
+      keys{},
+      releasedKeys(),
+      mouse{}
+{
     mouse.left = keyState::idle;
     mouse.middle = keyState::idle;
     mouse.right = keyState::idle;
+    keys.fill(keyState::idle);
+
+    mouse.windowId = 0;
+    mouse.xrel = 0;
+    mouse.yrel = 0;
+    mouse.xabs = 0;
+    mouse.yabs = 0;
+    mouse.scrollx = 0.0f;
+    mouse.scrolly = 0.0f;
+    mouse.was_moved = false;
 }
 
 void LE_InputHandler::initJoysticks () {
