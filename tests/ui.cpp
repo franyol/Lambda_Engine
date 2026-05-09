@@ -16,7 +16,7 @@ class SimpleGame : public LE_GameState {
             LE_TILEMAP->loadFromXmlFile ( "test.xml", mainWindow );
             LE_Cursor::init( mainWindow );
 
-            cursor = new LE_Cursor("black");
+            cursor = new LE_Cursor("black", mainWindow);
 
             addObject(cursor, "cursor");
        }
