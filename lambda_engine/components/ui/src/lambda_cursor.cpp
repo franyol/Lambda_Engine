@@ -40,6 +40,9 @@ void LE_Cursor::setup() {
 
 void LE_Cursor::update() {
     MouseInput* mouse = LE_INPUT->getMouse();
+
+    if (mouse->windowId != window) return;
+
     x = mouse->xabs;
     y = mouse->yabs;
 
