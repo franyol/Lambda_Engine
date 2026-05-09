@@ -130,6 +130,7 @@ void LE_InputHandler::update() {
                 SDL_GetMouseState(&mouse.xabs, &mouse.yabs);
                 mouse.xrel = event.motion.xrel;
                 mouse.yrel = event.motion.yrel;
+                mouse.windowId = event.motion.windowID;
                 break;
             // TODO: add game controllers and gather joystick info
 
