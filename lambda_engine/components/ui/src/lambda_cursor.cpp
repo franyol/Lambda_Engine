@@ -5,12 +5,14 @@
 
 void LE_Cursor::init(Uint32 windowId) {
     LE_TEXTURE->loadFromXmlFile(std::string(LE_ASSET_DIR) + "/ui/cursor/cursor.xml", windowId);
-    std::cout << std::string(LE_ASSET_DIR) << std::endl;
 }
 
-LE_Cursor::LE_Cursor() {}
+LE_Cursor::LE_Cursor(Uint32 window): window(window) {}
 
-LE_Cursor::LE_Cursor(std::string variant): variant(std::move(variant)) {}
+LE_Cursor::LE_Cursor(std::string variant, Uint32 window):
+    variant(std::move(variant)),
+    window(window)
+{}
 
 LE_Cursor::~LE_Cursor() {}
 
@@ -20,7 +22,6 @@ void LE_Cursor::setup() {
     scale = false;
     currentFrame = variant;
 
-    Uint32 window = LE_GAME->getWindow(0); // TODO: make the window dynamic
     frames["black"] = { "black", window };
     frames["black-click"] = { "black-click", window };
     frames["white"] = { "white", window };

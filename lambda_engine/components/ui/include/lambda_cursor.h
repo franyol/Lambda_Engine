@@ -13,12 +13,14 @@ enum class cursorState {
 
 class LE_Cursor: public LE_GameObject {
     public:
+        Uint32 window;
+
         std::string variant = "black";
         cursorState state = cursorState::iddle;
 
-        LE_Cursor ();
+        LE_Cursor (Uint32 windowId);
 
-        LE_Cursor (std::string variant);
+        LE_Cursor (std::string variant, Uint32 windowId);
 
         ~LE_Cursor ();
 
