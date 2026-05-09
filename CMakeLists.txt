@@ -134,5 +134,5 @@ install(FILES
 
 # Install static assets
 install (DIRECTORY assets/
-    DESTINATION share/lambda_engine
+    DESTINATION share/lambda_engine/assets
 )
