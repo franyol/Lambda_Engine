@@ -12,7 +12,7 @@ add_library(lambda_engine STATIC)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/lambda_engine/config/config.h.in
-    ${CMAKE_BINARY_DIR}/config.h
+    ${CMAKE_BINARY_DIR}/lambda_config.h
 )
 
 # Set base directory

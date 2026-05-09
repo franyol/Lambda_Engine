@@ -16,7 +16,7 @@ class SimpleGame : public LE_GameState {
             LE_TILEMAP->loadFromXmlFile ( "test.xml", mainWindow );
             LE_Cursor::init( mainWindow );
 
-            cursor = new LE_Cursor();
+            cursor = new LE_Cursor("black");
 
             addObject(cursor, "cursor");
        }
@@ -24,7 +24,7 @@ class SimpleGame : public LE_GameState {
         void update() {
             LE_GameState::update();
 
-            if (LE_INPUT->getKeyState( SDLK_ESCAPE ) == keyState::pressed)
+            if (LE_INPUT->getKeyState( SDL_SCANCODE_ESCAPE ) == keyState::pressed)
                 LE_GAME->exit();
         }
 };
@@ -34,6 +34,8 @@ int main ( int argc, char* argv[] ) {
         cerr << "Could not initialize Lambda Engine" << endl;
     }
 
+    SDL_ShowCursor(SDL_DISABLE); // Hide the original cursor
+                                 //
     // Create a window to show the texture
     mainWindow = LE_GAME->createWindow( "groups", 480, 640 );
 

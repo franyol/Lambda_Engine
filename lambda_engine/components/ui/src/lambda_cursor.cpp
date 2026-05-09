@@ -1,6 +1,7 @@
 #include "lambda_cursor.h"
 #include "lambda_TextureManager.h"
-#include <config.h>
+#include <lambda_Game.h>
+#include <lambda_config.h>
 
 void LE_Cursor::init(Uint32 windowId) {
     LE_TEXTURE->loadFromXmlFile(std::string(LE_ASSET_DIR) + "/ui/cursor/cursor.xml", windowId);
@@ -16,8 +17,15 @@ LE_Cursor::~LE_Cursor() {}
 void LE_Cursor::setup() {
     h = 50;
     w = 50;
-    scale = true;
+    scale = false;
     currentFrame = variant;
+
+    Uint32 window = LE_GAME->getWindow(0); // TODO: make the window dynamic
+    frames["black"] = { "black", window };
+    frames["black-click"] = { "black-click", window };
+    frames["white"] = { "white", window };
+    frames["white-click"] = { "white-click", window };
+
     addEventHandler(
             "on_click",
             [this](void* eventData) { on_click(); } );

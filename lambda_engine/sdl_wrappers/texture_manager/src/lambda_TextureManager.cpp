@@ -1,6 +1,6 @@
 #include "lambda_TextureManager.h"
 #include "lambda_XMLFabric.h"
-#include <config.h>
+#include <lambda_config.h>
 
 using namespace std;
 
